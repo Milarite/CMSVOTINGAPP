@@ -1,0 +1,16 @@
+.input-label{
+    color : black !important;
+    font-size: 13pt;
+}
+
+.form-error{
+    color:red !important;
+}
+
+#campaign-textarea{
+    width:400px;
+}
+
+#addForm label {
+    margin-top: 3px;
+}
