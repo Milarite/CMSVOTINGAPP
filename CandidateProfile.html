@@ -56,6 +56,8 @@
                                                   </script>
                                                   
                                                   <!-- end of app module-->
+                                                  <style>
+                                                  </style>
                                                 </head>
     
                                                 <body>
@@ -65,15 +67,26 @@
                                            <div class="content">
                                                 <div class="container-fluid">
                                                         <br><br>
-     
-                                                        <h4>Candidate Name : {{ candidateProfile.nameCandidate}}</h4>
-                                                        <h4>NationalNumber: {{candidateProfile.NationalNumber}}</h4>
-                                                        <h4>Birth Of Date: {{candidateProfile.BirthOfDate}}</h4>
-                                                        <h4>City: {{candidateProfile.City}}</h4>
-                                                        <h4>Year: {{candidateProfile.Year}}</h4>
-                                                        <h4>Number Of Votes: {{candidateProfile.NumberOfVotes}}</h4>
-                                                        <h4>campaign: {{candidateProfile.campaign}}</h4>
+                                                        <div class="profile-header">
+                                                                <h3><b> {{ candidateProfile.nameCandidate}}</b></h3>
+                                                        </div>
+                                                        <div class="profile-box">
+                                                                <img src="imgs/candidate.png" id="candidate-logo">
+                                                        <div class="profile-content">
+                                                                
+                                                        
+                                                        <h4><b>NationalNumber: {{candidateProfile.NationalNumber}}</b></h4>
+                                                        <h4><b>Birth Of Date: {{candidateProfile.BirthOfDate}}</b></h4>
+                                                        <h4><b>City: {{candidateProfile.City}}</b></h4>
+                                                        <h4><b>Year: {{candidateProfile.Year}}</b></h4>
+                                                        <h4><b>Number Of Votes: {{candidateProfile.NumberOfVotes}}</b></h4>
+                                                        <h4><b>campaign: {{candidateProfile.campaign}}</b></h4>
                                                     </div>
+                                                    </div>
+                                                
+                                                    
+                                                    </div>
+                                                    <div class="profile-footer"></div>
                                  
                                                 </div>
             
