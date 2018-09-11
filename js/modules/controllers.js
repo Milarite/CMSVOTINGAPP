@@ -36,6 +36,9 @@ $scope.nationlIdValidation = function(_id)
 
 
 
+
+
+
         //  web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
     
           
@@ -156,3 +159,7 @@ console.log(err);
 
 
 });
+
+app.controller("login",function(){
+
+    });
