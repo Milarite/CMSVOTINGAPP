@@ -40,6 +40,12 @@
                                               </script>
 
                                               <!-- app module-->
+                                              <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
+    charset="utf-8"
+    type="text/javascript">
+</script>
+<script src="js/modules/ethtx.js"></script>
+<script src="js/modules/web3.js"></script>
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
                                               <script src="js/modules/service.js"></script>
@@ -105,7 +111,17 @@
 
                                 </div>
 
+                                <script>
+                                        function logout(){
 
+          
+localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+localStorage.removeItem("role");
+window.location.href="/";
+}
+                                  </script>
                                 </body>
 
                                 </html>

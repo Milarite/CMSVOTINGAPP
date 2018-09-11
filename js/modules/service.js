@@ -1,5 +1,11 @@
 var app=angular.module('starter.services',[]);
+app.service("getRole",function(){
 
+    this.getCurrentRole = function(){
+        return localStorage.getItem("role");
+    }
+
+});
 app.service("Web3jsObj",function(){
 
 

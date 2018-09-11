@@ -38,7 +38,13 @@
                                                 
                                                     });
                                                   </script>
-
+ <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
+ charset="utf-8"
+ type="text/javascript">
+</script>
+<script src="js/modules/ethtx.js"></script>
+<script src="js/modules/web3.js"></script>
+<script src="js/loading.js"></script>
                                                   <!-- app module-->
                                                   <script src="js/modules/abi.js"></script>
                                                   <script src="js/modules/app.js"></script>
@@ -118,11 +124,18 @@
                                                             
                                             
                                                           </label>
+                                                          <label class="item item-input">
+                                                                <span class="input-label">Phone Number</span>
+                                                                <input name="phoneNumber" type="text" class="form-control" ng-model="candidateData.phoneNumber" required>
+                                                                <span class="form-error" ng-show="addForm.phoneNumber.$touched && addForm.phoneNumber.$invalid">this field is required</span>
+                                                                
+                                                
+                                                              </label>
                                             <div>
                                                           <label class="item item-input">
                                                             <span class="input-label">Campaign</span>
                                                             <textarea name="campaign" id="campaign-textarea" class="form-control" type="text"  ng-model="candidateData.campaign" required cols="6" rows="4"></textarea>
-                                                            <span class="form-error" ng-show="addForm.Campaign.$touched && addForm.campaign.$invalid">this field is required</span>
+                                                            <span class="form-error" ng-show="addForm.campaign.$touched && addForm.campaign.$invalid">this field is required</span>
                                                             
                                             
                                                           </label>
@@ -148,5 +161,17 @@
 
 
                                         </body>
+
+                                        <script>
+                                              function logout(){
+  
+                
+  localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+localStorage.removeItem("role");
+window.location.href="/";
+    }
+                                        </script>
 
                                         </html>

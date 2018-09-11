@@ -1,5 +1,6 @@
 
-                                         
+    
+                                            
 
 <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
     <!--
@@ -21,26 +22,26 @@
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="./CandidateProfile.html">
+          <a class="nav-link" ng-if="candidate_items && !judgment_items" href="./CandidateProfile.html">
             <i class="material-icons">person</i>
             <p>Candidate Profile</p>
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="./ViewCandidate.html">
+          <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./ViewCandidate.html">
             <i class="material-icons">content_paste</i>
             <p>View Candidates</p>
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" href="./AddCandidate.html">
+          <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./AddCandidate.html">
             <i class="material-icons">library_books</i>
             <p>Add Candidate</p>
           </a>
         </li>
      
         <li class="nav-item ">
-          <a class="nav-link" href="./notifications.html">
+          <a class="nav-link" href="javascript:void(0)" onclick="logout()">
             <i class="material-icons">logout</i>
             <p>Logout</p>
           </a>
@@ -115,4 +116,6 @@
               </div>
             </div>
           </nav>
+
+
    
