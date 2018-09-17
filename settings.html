@@ -65,26 +65,28 @@
                                <div ng-include="'shared/header.html'"></div>
                                <div class="content">
                                     <div class="container-fluid">
-                                                   <form>
+                                                   <form name="settingsForm">
                                                      <div class="settingCustom">
                                                      <label>Number of votes</label>
                                                      <div class="col-4">
-                                                     <input type="text" class="form-control" name="numOfVotes" id="numOfVotes">
+                                                     <input type="text" class="form-control"  ng-model="numOfVotes" name="numOfVotes" id="numOfVotes" >
                                                     </div>
                                                   
                                                     <label>start Date</label>
                                                      <div class="col-4">
-                                                     <input type="date" class="form-control" name="startDate" id="startDate">
+                                                     <input type="date" class="form-control" name="startDate" id="startDate"  ng-model="startDate" >
                                                     </div>
                                            
-                                                    <label>start Time</label>
+                                                    <label for="exampleInput">Start Time</label>
                                                      <div class="col-4">
-                                                     <input type="number" class="form-control" name="startTime" id="startTime">
+                                                     <input type="time" class="form-control" name="startTime" id="startTime" ng-model="startTime" >
+                                                    
                                                     </div>
                                                     
                                                     <label>end Time</label>
                                                      <div class="col-4">
-                                                     <input type="number" class="form-control" name="endtTime" id="endTime">
+                                                     <input type="time" class="form-control" name="endtTime" id="endTime" ng-model="endTime">
+                                                     <button class="btn btn-primary" ng-click="settings(settingsForm)">submit</button>
                                                     </div>
                                                   </div>
                                                    </form>

@@ -432,6 +432,34 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
 
 
 });
-app.controller("settingsCtrl",function($scope){
+app.controller("settingsCtrl",function($scope,Web3jsObj){
 
-});
+    
+  Web3jsObj.web3Init(contractsInfo.main,MainAbi,null,null);
+  Web3jsObj.Web3Facotry(rinkebyUrl);
+  smartInstance=Web3jsObj.Web3SmartContract();
+  $scope.VotesCount=function (votesCount) {
+  const counts=smartInstance.getVotesCount.call();
+  const startdate=smartInstance.getStartDate.call();
+  const StartTime=smartInstance.getStartTime.call();
+  const Endtime=smartInstance.getEndTime.call();
+
+  $scope.numOfVotes=counts;
+  $scope.startDate=startdate;
+  $scope.startTime=StartTime;
+  $scope.endTime=Endtime;
+
+$scope.settings=function(settingsForms)
+{
+    
+    $.LoadingOverlay('show');
+
+
+
+
+}
+       
+  }
+  
+
+});  
