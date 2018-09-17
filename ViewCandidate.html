@@ -46,6 +46,7 @@
 </script>
 <script src="js/modules/ethtx.js"></script>
 <script src="js/modules/web3.js"></script>
+<script src="js/loading.js"></script>
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
                                               <script src="js/modules/service.js"></script>
@@ -78,7 +79,7 @@
                                                     <!--  <th >Candidate Id</th> -->
                                                       <th>City</th>
                                                       <th>Number of Votes</th>
-                                                     <th>Delete candidate</th>
+                                                     <th>Operations</th>
                                                     </tr>
                                                     <tbody ng-repeat ="x in candidates">
                                                     <tr>
@@ -99,7 +100,7 @@
                                                      
                                                      
                                                           <td>
-                                                            <i  ng-click="deleteCandidate(x.address,x.nationalId)"  class="fa fa-trash" aria-hidden="true">
+                                                            <i  ng-click="deleteCandidate(x.nationalId)"  class="fa fa-trash" style="cursor: pointer;" aria-hidden="true">
                                                               
                                                             </i>
                                                             

@@ -21,6 +21,9 @@ const smartContract = Web3jsObj.Web3SmartContract();
 $scope.nationlIdValidation = function(_id)
 {
 
+
+    if(_id)
+    {
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
@@ -31,8 +34,11 @@ $scope.nationlIdValidation = function(_id)
     $scope.userFound = true;
   }
 
+
+
   
 
+}
 }
 
 
@@ -70,14 +76,13 @@ $scope.nationlIdValidation = function(_id)
 
         // create candidate wallet
         $.LoadingOverlay('show');
-        Web3jsObj.createBrainWallet(candidateData.candidateId,candidateData.password).then(function(_wallet)
     
-    {
-console.log(_wallet.address);
+
+
 
                ///// add candidate function
            
-               var data =smartContract.addCandidate.getData(_wallet.address,candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
+               var data =smartContract.addCandidate.getData(candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
                 ,candidateData.city,candidateData.year,candidateData.phoneNumber,candidateData.campaign); 
             
             
@@ -124,7 +129,7 @@ $.LoadingOverlay('hide');
 
 
 
-            })
+           
       
         }
 
@@ -350,8 +355,48 @@ $scope.check = function(event,_val){
     
     var smartInstance = Web3jsObj.Web3SmartContract();
 
-     $scope.deleteCandidate=function(_address,_nationalId){
-         
+     $scope.deleteCandidate=function(_nationalId){
+        $.LoadingOverlay('show');
+        var data =smartInstance.deleteCandidate.getData(_nationalId); 
+
+        web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+                  
+            var tx =new ethereumjs.Tx({ 
+                data : data,
+                nonce : nonce,
+                gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+                to : contractsInfo.main,
+                value : 0,
+                gasLimit: 1000000
+                
+    
+            });
+    
+              tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+              var raw = '0x' + tx.serialize().toString('hex');
+    
+    
+              web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+
+if(!err)
+{
+
+console.log(transactionHash);
+alert("candidate deleted");
+}
+console.log(err);
+$.LoadingOverlay('hide');
+
+
+
+    });
+
+
+            
+
+
+
+        });
 
      }
      
@@ -360,31 +405,29 @@ $scope.check = function(event,_val){
    $window.location.href="/";
 
    
-//      $scope.candidates = [
 
-// {nameCandidate:"muath",City:"Amman",NumberOfVotes:10},
-// {nameCandidate:"Yaqeen",City:"Amman",NumberOfVotes:5},
-// {nameCandidate:"Yousef",City:"Amman",NumberOfVotes:3},
-// {nameCandidate:"Rajai",City:"Amman",NumberOfVotes:4},
-// {nameCandidate:"Abu Jubara",City:"Amman",NumberOfVotes:8},
-
-//      ];
 
 const numberOfCandidate = smartInstance.getCandidateNationalIDArrayLength.call();
 const number = numberOfCandidate.c[0];
 var items = [];
 for(var i =0 ; i < number ;i++)
 {
+
   var address = smartInstance.getCandidateNationalID.call(i);
+  
+ 
   var name = smartInstance.getCandidateName.call(address);
+  if(name)
+  {
   var city = smartInstance.getCandidateCity.call(address);
   
   var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
   var _nationalId = smartInstance.getCandidateNational.call(address);
 
-  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes,address:  address ,nationalId : _nationalId };
+  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
 
   items.push(candidate);
+  }
   //var 
 
   
