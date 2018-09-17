@@ -81,7 +81,7 @@ $scope.nationlIdValidation = function(_id)
         Web3jsObj.createBrainWallet(candidateData.candidateId,candidateData.password).then(function(_wallet)
     
     {
-
+console.log(_wallet.address);
 
                ///// add candidate function
            
@@ -431,7 +431,8 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
     Year:year,
     NumberOfVotes:NumberOfVotes,
     nameCandidate:nameCandidate,
-    campaign:campaign
+    campaign:campaign,
+    address : candidate_address
     
     
     };
