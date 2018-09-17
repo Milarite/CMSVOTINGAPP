@@ -2,10 +2,17 @@
 const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
 const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
 var contractsInfo  = {
+<<<<<<< HEAD
     main : "0x71055ddef5a8103f8eb8055fa6d82a25a28f2b0c",
     judgment :"0xc4e3a63f2d677ee8ea981652f3433cb72e82f595",
     voters :"0x6880d2269205e9483bca2b39074d597993ab2648",
     candidate:"0xc75905534534630b85785d03108c2e4e24c7c683"
+=======
+    main : "0x115f98c32f8d17b00653c7ad64a05b594ce1ad37",
+    judgment :"0xd681a9c8c7b5b36a3d6f908f00d1916b3ad3f02d",
+    voters :"0x10212dc87e97c036a8d88604c99ac0d5025edbb0",
+    candidate:"0xae4fe88c934e7de07bf0d056edffb0b9027d8827"
+>>>>>>> 4cee8b860b4a8406aec9d6a9e61eeb3dc88c1bb4
     
 	}
 	
@@ -795,6 +802,27 @@ var MainAbi =[
 
 
 
+<<<<<<< HEAD
+=======
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+>>>>>>> 4cee8b860b4a8406aec9d6a9e61eeb3dc88c1bb4
 var CandidateAbi=[
 	{
 		"constant": true,
@@ -1022,6 +1050,25 @@ var CandidateAbi=[
 				"type": "address"
 			}
 		],
+		"name": "getCandidateNationalId",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
 		"name": "getCandidateCity",
 		"outputs": [
 			{
@@ -1123,16 +1170,26 @@ var CandidateAbi=[
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "nationalID",
+				"type": "string"
+			}
+		],
+		"name": "deleteCandidate",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]
-
-
-
-
-
-
-
-
 
 
 
