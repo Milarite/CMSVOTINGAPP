@@ -2,10 +2,10 @@
 const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
 const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
 var contractsInfo  = {
-    main : "0x39b87fb1061f819c4273e97a08de237943f7b40d",
-    judgment :"0x037f8f496f33428acafa2ae53f49b5c1d05003db",
-    voters :"0xd598964c540fbe6e49f121c381887032a62483fd",
-    candidate:"0xc3c1987d618f2fa91e0f775519a21477ca67312f"
+    main : "0x115f98c32f8d17b00653c7ad64a05b594ce1ad37",
+    judgment :"0xd681a9c8c7b5b36a3d6f908f00d1916b3ad3f02d",
+    voters :"0x10212dc87e97c036a8d88604c99ac0d5025edbb0",
+    candidate:"0xae4fe88c934e7de07bf0d056edffb0b9027d8827"
     
 	}
 	
@@ -207,6 +207,24 @@ var MainAbi =[
 			}
 		],
 		"name": "addJudgmentInformation",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "nationalID",
+				"type": "string"
+			}
+		],
+		"name": "deleteCandidate",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -524,6 +542,25 @@ var MainAbi =[
 		"constant": true,
 		"inputs": [
 			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
+		"name": "getCandidateNational",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "index",
 				"type": "uint256"
 			}
@@ -748,6 +785,23 @@ var MainAbi =[
 		"type": "function"
 	}
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -986,6 +1040,25 @@ var CandidateAbi=[
 				"type": "address"
 			}
 		],
+		"name": "getCandidateNationalId",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			}
+		],
 		"name": "getCandidateCity",
 		"outputs": [
 			{
@@ -1087,16 +1160,26 @@ var CandidateAbi=[
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_address",
+				"type": "address"
+			},
+			{
+				"name": "nationalID",
+				"type": "string"
+			}
+		],
+		"name": "deleteCandidate",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
 	}
 ]
-
-
-
-
-
-
-
-
 
 
 

@@ -24,6 +24,8 @@ $scope.nationlIdValidation = function(_id)
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
+
+
   if(user != no_address){
 
     $scope.userFound = true;
@@ -53,16 +55,6 @@ $scope.nationlIdValidation = function(_id)
           
 
 
-
-
-
-
-
-
-
-
-
-  
 
 
 
@@ -351,6 +343,17 @@ $scope.check = function(event,_val){
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole)
 
  { 
+    const judgment_address = localStorage.getItem("address");
+    const judgment_privateKey = localStorage.getItem("pkAddress");
+    Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+    Web3jsObj.Web3Facotry(rinkebyUrl);
+    
+    var smartInstance = Web3jsObj.Web3SmartContract();
+
+     $scope.deleteCandidate=function(_address,_nationalId){
+         
+
+     }
      
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined || $scope.current_role == "candidate")
@@ -366,29 +369,20 @@ $scope.check = function(event,_val){
 // {nameCandidate:"Abu Jubara",City:"Amman",NumberOfVotes:8},
 
 //      ];
-const judgment_address = localStorage.getItem("address");
-const judgment_privateKey = localStorage.getItem("pkAddress");
-
-
-
-Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
-Web3jsObj.Web3Facotry(rinkebyUrl);
-
-var smartInstance = Web3jsObj.Web3SmartContract();
 
 const numberOfCandidate = smartInstance.getCandidateNationalIDArrayLength.call();
-
 const number = numberOfCandidate.c[0];
 var items = [];
 for(var i =0 ; i < number ;i++)
 {
   var address = smartInstance.getCandidateNationalID.call(i);
-  console.log(address)
   var name = smartInstance.getCandidateName.call(address);
   var city = smartInstance.getCandidateCity.call(address);
+  
   var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
+  var _nationalId = smartInstance.getCandidateNational.call(address);
 
-  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes  };
+  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes,address:  address ,nationalId : _nationalId };
 
   items.push(candidate);
   //var 
@@ -435,5 +429,9 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
     
     
     };
+
+
+});
+app.controller("settingsCtrl",function($scope){
 
 });
