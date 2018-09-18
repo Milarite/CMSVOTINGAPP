@@ -12,6 +12,7 @@
                                                 <link href="./css/custom.css" rel="stylesheet"/>
                                                 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
+  <link rel="stylesheet" href="css/jquery.timepicker.css">
                                                 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                 <link rel="stylesheet" href="/resources/demos/style.css">
                                          -->
@@ -42,6 +43,7 @@
                                             
                                                 });
                                               </script>
+                                             
 
                                               <!-- app module-->
                                               <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
@@ -53,6 +55,7 @@
 <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 <script src="js/modules/firebasecom.js"></script>
 <script src="js/loading.js"></script>
+<script src="js/jquery.timepicker.js"></script>
 
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
@@ -63,6 +66,11 @@
                                               <script src ="js/modules/app.js">
                                                       
                                               </script>
+                                               <script>
+                                                  $(function() {
+                                                   $( ".timepicker" ).timepicker();
+                                                  })
+                                               </script>
                                               <script>
                                                   $( function() {
                                                     $( "#datepicker" ).datepicker();
@@ -95,12 +103,12 @@
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate')">Save</span></td>
                                                     </tr>
                                                     <tr>
-                                                            <td><label>Start Time </label><input type="text" class="form-control" name="startTime" id="startTime" ng-model="startTime" ></td>
+                                                            <td><label>Start Time </label><input type="text" class="form-control timepicker" name="startTime"ng-model="startTime" ></td>
                                                             <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime')">Save</span></td>
 
                                                         </tr>
                                                         <tr>
-                                                                <td><label>End Time </label><input type="text" class="form-control" name="endtTime" id="endTime" ng-model="endTime"></td>
+                                                                <td><label>End Time </label><input type="text" class="form-control timepicker " name="endtTime"   ng-model="endTime"></td>
                                                                 <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime')">Save</span></td>
 
                                                             </tr>
