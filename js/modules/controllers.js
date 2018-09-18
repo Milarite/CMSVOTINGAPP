@@ -170,19 +170,8 @@ $.LoadingOverlay('hide');
 app.controller("loginCtrl",function($scope,Web3jsObj,$window,FireBaseObj){
 
     ////
- FireBaseObj.getFireBaseObj("/db").child("admin").orderByChild("ID").equalTo("1").once("value",snapshot => {
-    if (!snapshot.exists()){
- FireBaseObj.getFireBaseObj("/db").child("admin").set({
-id : 1,
-name :"admin",
-password:"123456"
 
- }) ;    
-     
-    }
-  
-});;
-
+const fireBase = FireBaseObj.getFireBaseObj("/db").child("judgments");
 
 if(localStorage.getItem("role") !=undefined){
 
@@ -306,29 +295,48 @@ $scope.check = function(event,_val){
         // {
         
         // }
-         if(($scope.role=="judgment" && user.password =="judgjudg"))
+
+         if($scope.role=="judgment" )
         {
+
+            fireBase.once("value", function(data) {
+                data.forEach(function(value){
+
+
+                  console.log(fireBase.child(value).once("value",function(_d){
+
+console.log(_d);
+                  }));
+
+                
+
+
+                   
+
+                });
+
+            });
             
-            $.LoadingOverlay('show');
+            // $.LoadingOverlay('show');
         
             
-            Web3jsObj.createBrainWallet(user.NationalNumber, user.password).then(function(_wallet){
+            // Web3jsObj.createBrainWallet(user.NationalNumber, user.password).then(function(_wallet){
         
         
                     
-                localStorage.setItem("address", _wallet.address);
-                localStorage.setItem("pkAddress",_wallet.privateKey);
+            //     localStorage.setItem("address", _wallet.address);
+            //     localStorage.setItem("pkAddress",_wallet.privateKey);
                 
         
-                $scope.addEtherToJudgment(public_key,private_key,_wallet.address);
+            //     $scope.addEtherToJudgment(public_key,private_key,_wallet.address);
         
         
         
-                /// add ether to judg if his wallet is empty 
+            //     /// add ether to judg if his wallet is empty 
         
         
         
-                // end of adding ether to judg
+            //     // end of adding ether to judg
         
         
         
@@ -336,7 +344,7 @@ $scope.check = function(event,_val){
                    
         
                     
-                });
+            //     });
              
              // console.log(Web3jsObj.Web3Facotry("https://rinkeby.infura.io/v3/afbac1a223484d84a7784a133d1f2010"));
             //   var webobj=Web3jsObj.Web3Facotry("https://rinkeby.infura.io/v3/afbac1a223484d84a7784a133d1f2010");
@@ -354,11 +362,7 @@ $scope.check = function(event,_val){
             }
           else {alert ("invalid password")};
           }
-$scope.loginAsAdmin=function(_loginForm){
 
-
-    
-}
     });
 
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole)
@@ -513,11 +517,7 @@ $scope.UpdateSettings=function(_row)
 {
    
    
-// var currentCounts = $scope.numOfVotes;
-// var currentStartDate = $scope.startDate;
-// var currentStartTime = $scope.startTime;
-// var currentEndTime = $scope.endTime;
-debugger;
+
     switch(_row){
         case "votesCount":
 $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
@@ -618,3 +618,93 @@ $.LoadingOverlay('hide');
   
 
 });  
+
+app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window)
+{
+  const auth =  FireBaseObj.getFireBaseAuth();
+  auth.signOut().then(function() {
+
+  });
+if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPassword") == null){
+    
+  auth.createUserWithEmailAndPassword("gharablipro19933@hotmail.com","P@ssw0rd").then(function(result){
+
+    
+
+  });
+}
+
+  $scope.loginAsAdmin=function(_loginForm,_user){
+
+
+    auth.signInWithEmailAndPassword(_user.adminEmail,_user.adminPassword).then(function(_result){
+
+        if(_result.user.email)
+        {
+            let adminUser = 
+             _result.user.email;
+            let password =
+            _result.user.password;
+
+            localStorage.setItem("role","admin");
+
+
+            
+        
+            localStorage.setItem("admin",adminUser);
+          
+            $window.location.href="/AdminHome.html";
+        }
+
+    }).catch(function(_result){
+
+        console.log(_result);
+    });
+
+}
+
+
+});
+
+
+app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
+{
+    const userName = localStorage.getItem("admin");
+    
+
+
+
+    
+     Web3jsObj.createBrainWallet(userName, "P@ssw0rd").then(function(_wallet){
+
+        localStorage.setItem("adminAddress", _wallet.address);
+        localStorage.setItem("adminPkAddress",_wallet.privateKey);
+
+        
+
+     });
+    
+});
+
+app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window)
+
+{
+$scope.addJudgment = function(_judg){
+  
+    //let passEncrypted = CryptoJS.AES.encrypt(_judg.password,"HYM");
+    const fireBase = FireBaseObj.getFireBaseObj("/db").child("judgments").push( { username : _judg.UserName,
+        password : _judg.Password});
+
+   
+
+
+    alert("judgment  added");
+
+    location.relode();
+
+
+
+
+}
+
+});

@@ -14,6 +14,10 @@ this.getFireBaseObj = function(_ref){
     }
     return firebase.database();
 }
+
+this.getFireBaseAuth = function(){
+    return firebase.auth();
+}
 })
 app.service("Web3jsObj",function(){
 

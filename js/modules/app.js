@@ -3,6 +3,7 @@ angular.module('starter', [ 'starter.controllers','starter.services']).run(funct
 
  let role = localStorage.getItem("role");
  if(role != undefined){
+     
      if(role == "candidate"){
          $rootScope.candidate_items = true;
      }
@@ -10,4 +11,6 @@ angular.module('starter', [ 'starter.controllers','starter.services']).run(funct
          $rootScope.judgment_items = true;
      }
  }
+
+ 
 })

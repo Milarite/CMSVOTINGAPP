@@ -6,7 +6,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<!--===============================================================================================-->
 
 	<link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
@@ -33,7 +32,7 @@ type="text/javascript">
 </script>
 
 </head>
-<body ng-app="starter" ng-controller="loginCtrl">
+<body ng-app="starter" ng-controller="adminLoginCtrl">
      
 	<div class="limiter">
      
@@ -51,8 +50,8 @@ type="text/javascript">
     <div class="col-md-8">
 					
                       
-						<input   class="form-control login-field" type="text" ng-model="adminUserName" name="adminUserName" required>
-                        <p ng-show="loginForm.adminUserName.$dirty &&  loginForm.adminUserName.$error.required">* NationalNumber is required</p>
+						<input   class="form-control login-field" type="text" ng-model="user.adminEmail" name="adminEmail" required>
+                        <p ng-show="loginForm.adminEmail.$dirty &&  loginForm.adminEmail.$error.required">* NationalNumber is required</p>
 					</div>
 
 					
@@ -61,7 +60,7 @@ type="text/javascript">
                             <label>Password</label>
                             <div class="col-md-8">
                            
-						<input class="form-control login-field" type="password" ng-model="adminPassword"  name="adminPassword" required>
+						<input class="form-control login-field" type="password" ng-model="user.adminPassword"  name="adminPassword" required>
                         <p ng-show="loginForm.adminPassword.$dirty && loginForm.adminPassword.$error.required">*password is required </p>
                         <!-- <p ng-show="loginForm.password.$dirty && loginForm.password.$error.minlength">*Password must be longer than 6 characters </p> -->
                  
@@ -73,7 +72,7 @@ type="text/javascript">
 <div class="container-login100-form-btn">
         <div class="wrap-login100-form-btn">
 							
-							<button ng-click="loginAsAdmin(loginForm)"  class="btn-custom" ng-disabled="loginForm.$invalid">
+							<button ng-click="loginAsAdmin(loginForm,user)"  class="btn-custom" ng-disabled="loginForm.$invalid">
 								Login
                             </button>
                             
