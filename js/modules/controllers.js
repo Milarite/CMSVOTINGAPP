@@ -27,17 +27,22 @@ $scope.nationlIdValidation = function(_id)
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
+  if(user == true)
+
+  {
 
 
-  if(user != no_address){
+
+
+ 
 
     $scope.userFound = true;
-  }
+  
 
 
 
   
-
+  }
 }
 }
 
@@ -167,10 +172,22 @@ $.LoadingOverlay('hide');
 
 });
 
-app.controller("loginCtrl",function($scope,Web3jsObj,$window){
+app.controller("loginCtrl",function($scope,Web3jsObj,$window,FireBaseObj){
 
     ////
+ FireBaseObj.getFireBaseObj("/db").child("admin").orderByChild("ID").equalTo("1").once("value",snapshot => {
+    if (!snapshot.exists()){
+ FireBaseObj.getFireBaseObj("/db").child("admin").set({
+id : 1,
+name :"admin",
+password:"123456"
+
+ }) ;    
      
+    }
+  
+});;
+
 
 if(localStorage.getItem("role") !=undefined){
 
@@ -342,7 +359,11 @@ $scope.check = function(event,_val){
             }
           else {alert ("invalid password")};
           }
+$scope.loginAsAdmin=function(_loginForm){
 
+
+    
+}
     });
 
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole)
@@ -417,14 +438,14 @@ for(var i =0 ; i < number ;i++)
   
  
   var name = smartInstance.getCandidateName.call(address);
-  if(name)
+ // if(name)
   {
   var city = smartInstance.getCandidateCity.call(address);
   
   var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
   var _nationalId = smartInstance.getCandidateNational.call(address);
 
-  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
+  var candidate = {address:address,nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
 
   items.push(candidate);
   }
@@ -477,12 +498,12 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
 
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
-
-    
-  Web3jsObj.web3Init(contractsInfo.main,MainAbi,null,null);
+    const judgment_address = localStorage.getItem("address");
+    const judgment_privateKey = localStorage.getItem("pkAddress");
+  Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
   Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
-  $scope.VotesCount=function (votesCount) {
+  
   const counts=smartInstance.getVotesCount.call();
   const startdate=smartInstance.getStartDate.call();
   const StartTime=smartInstance.getStartTime.call();
@@ -493,17 +514,112 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   $scope.startTime=StartTime;
   $scope.endTime=Endtime;
 
-$scope.settings=function(settingsForms)
+$scope.UpdateSettings=function(_row)
 {
+   
+   
+// var currentCounts = $scope.numOfVotes;
+// var currentStartDate = $scope.startDate;
+// var currentStartTime = $scope.startTime;
+// var currentEndTime = $scope.endTime;
+debugger;
+    switch(_row){
+        case "votesCount":
+$scope.updateSettingsValue($scope.numOfVotes,"votesCount");
+
+        break;
+        case "startDate":
+        $scope.updateSettingsValue($scope.startDate,"startDate");
+
+        break;
+        case "startTime":
+        $scope.updateSettingsValue($scope.startTime,"startTime");
+
+        break;
+        case "endTime":
+        $scope.updateSettingsValue($scope.endTime,"endTime");
+
+        break;
+    }
     
-    $.LoadingOverlay('show');
+
+    
+
+        
+    
+
+        
+    
+
+
+    
 
 
 
 
-}
        
   }
+
+  $scope.updateSettingsValue = function (_newValue,_data){
+      
+    $.LoadingOverlay('show');
+    var data = null;
+    switch(_data){
+        case "votesCount":
+       data =  smartInstance.updateVotesCount.getData(_newValue);
+        break;
+        case "startDate":
+        data =  smartInstance.setStartDate.getData(_newValue);
+         break;
+         case "startTime":
+         data =  smartInstance.setStartTime.getData(_newValue);
+          break;
+          case "endTime":
+          data =  smartInstance.setEndTime.getData(_newValue);
+           break;
+    } 
+
+    web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+              
+        var tx =new ethereumjs.Tx({ 
+            data : data,
+            nonce : nonce,
+            gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+            to : contractsInfo.main,
+            value : 0,
+            gasLimit: 1000000
+            
+
+        });
+
+          tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+          var raw = '0x' + tx.serialize().toString('hex');
+
+
+          web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+
+if(!err)
+{
+
+console.log(transactionHash);
+alert("settings updated");
+}
+console.log(err);
+$.LoadingOverlay('hide');
+
+
+
+
+
+});
+
+
+        
+
+
+
+    });
+}
   
 
 });  

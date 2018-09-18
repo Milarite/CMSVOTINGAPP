@@ -47,6 +47,8 @@
 <script src="js/modules/ethtx.js"></script>
 <script src="js/modules/web3.js"></script>
 <script src="js/loading.js"></script>
+<script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+<script src="js/modules/firebasecom.js"></script>
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
                                               <script src="js/modules/service.js"></script>
@@ -74,7 +76,7 @@
                                                     <tr>
                                                       
 
-                                            
+                                            <th>address</th>
                                                        <th> Candidate Name </th>
                                                     <!--  <th >Candidate Id</th> -->
                                                       <th>City</th>
@@ -83,6 +85,7 @@
                                                     </tr>
                                                     <tbody ng-repeat ="x in candidates">
                                                     <tr>
+                                                      <td>{{x.address}}</td>
                                                       <td>  {{x.nameCandidate}} </td>
                                                       
                                                       
