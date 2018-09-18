@@ -75,3 +75,28 @@
 .settingCustom label{
     margin-top:40px ;
 }
+
+.custom-loginas .col-md-4{
+    margin-left:auto;
+    margin-right: auto;
+}
+
+.custom-container-loginas{
+    padding-top: 280px;
+    height:100%;
+}
+.img-float div{
+    float:left;
+    padding: 40px;
+}
+.img-float{
+    margin-left:auto;
+    margin-right:auto;
+}
+
+.btn-custom{
+    width:100%;
+    height:50px;
+    background-color:#93a0ae;
+    color:white;
+}
