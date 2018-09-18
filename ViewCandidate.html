@@ -76,19 +76,22 @@
                                                     <tr>
                                                       
 
-                                            
+                                            <th>address</th>
                                                        <th> Candidate Name </th>
                                                     <!--  <th >Candidate Id</th> -->
-                                                      <th>City</th>
+                                                    <th>id</th> 
+                                                    <th>City</th>
                                                       <th>Number of Votes</th>
                                                      <th>Operations</th>
                                                     </tr>
                                                     <tbody ng-repeat ="x in candidates">
                                                     <tr>
+                                                      <td>{{x.address}}</td>
                                                       <td>  {{x.nameCandidate}} </td>
                                                       
                                                       
                                                   <!-- <td> {{x.CandidateID}}</td> -->
+                                                 <td>{{x.address}}</td>
                                                   <td>
                                                      {{x.City}}
                                                     </td>

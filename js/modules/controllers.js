@@ -21,23 +21,27 @@ const smartContract = Web3jsObj.Web3SmartContract();
 $scope.nationlIdValidation = function(_id)
 {
 
-
     if(_id)
     {
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
+  if(user == true)
+
+  {
 
 
-  if(user != no_address){
+
+
+ 
 
     $scope.userFound = true;
-  }
+  
 
 
 
   
-
+  }
 }
 }
 
@@ -257,14 +261,14 @@ $scope.check = function(event,_val){
 
   $scope.validation = function(_idNumber,_pass){
 
+debugger;
    
     
     Web3jsObj.web3Init(contractsInfo.main,MainAbi,null,null);
     var candidateContractInstance = Web3jsObj.Web3SmartContract();
 // this line will get the address from smart contract by candidate national id
-    const candidate_address = candidateContractInstance.getCandidateAddressByNationalId.call(_idNumber);
     // this line will call function thats accept address and password as parameter and return true or false based on founded 
-    const isAccountValid = candidateContractInstance.CandidateCheckIdAndPassword(candidate_address,_pass);
+    const isAccountValid = candidateContractInstance.CandidateCheckIdAndPassword(_idNumber,_pass);
  if(isAccountValid==true){
    localStorage.setItem("candidate_nationalId",_idNumber);
  }
@@ -437,14 +441,14 @@ for(var i =0 ; i < number ;i++)
   
  
   var name = smartInstance.getCandidateName.call(address);
-  if(name)
+ // if(name)
   {
   var city = smartInstance.getCandidateCity.call(address);
   
   var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
   var _nationalId = smartInstance.getCandidateNational.call(address);
 
-  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
+  var candidate = {address:address,nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
 
   items.push(candidate);
   }
@@ -470,26 +474,22 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
   
   const _idNumber = localStorage.getItem("candidate_nationalId");
   
-  const candidate_address = smartInstance.getCandidateAddressByNationalId.call(_idNumber);
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
-  const birthOfDate = smartInstance.getCandidatebirthOfDate.call(candidate_address);
-  const city = smartInstance.getCandidateCity.call(candidate_address);
-  const year = smartInstance.getCandidateYear.call(candidate_address);
-  const NumberOfVotes=smartInstance.getCandidateVotesNumber.call(candidate_address);
-  const nameCandidate=smartInstance.getCandidateName.call(candidate_address);
-  const campaign=smartInstance.getCandidateCampaign.call(candidate_address);
-  
+  const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
+  const city = smartInstance.getCandidateCity.call(_idNumber);
+  const year = smartInstance.getCandidateYear.call(_idNumber);
+  const NumberOfVotes=smartInstance.getCandidateVotesNumber.call(_idNumber);
+  const nameCandidate=smartInstance.getCandidateName.call(_idNumber);
+  const campaign=smartInstance.getCandidateCampaign.call(_idNumber);
   
   $scope.candidateProfile = {
     NationalNumber : _idNumber,
-    Address : candidate_address,
     BirthOfDate : birthOfDate,
     City:city,
     Year:year,
     NumberOfVotes:NumberOfVotes,
     nameCandidate:nameCandidate,
-    campaign:campaign,
-    address : candidate_address
+    campaign:campaign
     
     
     };
@@ -556,7 +556,7 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
   }
 
   $scope.updateSettingsValue = function (_newValue,_data){
-      debugger;
+      
     $.LoadingOverlay('show');
     var data = null;
     switch(_data){
