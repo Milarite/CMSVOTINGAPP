@@ -112,12 +112,32 @@
                                                             
                                             
                                                           </label>
-                                                          <label class="item item-input">
+                                                          <!-- <label class="item item-input">
                                                             <span class="input-label">City</span>
                                                             <input name="city" type="text" class="form-control" ng-model="candidateData.city" required>
-                                                            <span class="form-error" ng-show="addForm.city.$touched && addForm.city.$invalid">this field is required</span>
-                                                            
-                                            
+                                                            <span class="form-error" ng-show="addForm.city.$touched && addForm.city.$invalid">this field is required</span> -->
+                                                           <div>
+                                                            <label class="item item-input"> 
+                                                                <span class="input-label">City</span> 
+                                                                <select name="city" ng-model="candidateData.city" class="form-control">
+                                                                  <option value="">Select City</option>                                                       
+                                                              <option value="Amman">Amman</option>
+                                                              
+                                                              <option value="Irbid">Irbid</option>
+                                                              <option value="Zarqa">Zarqa</option>
+                                                              <option value="Rumtha">Rumtha</option>
+                                                              <option value="Mafraq">Mafraq</option>
+                                                              <option value="karak">karak</option>
+                                                              <option value="Tafileh">Tafileh</option>
+                                                              <option value="Maan">Maan</option>
+                                                              <option value="Aqapa">Aqapa</option>
+                                                              <option value="Rumtha">Rumtha</option>
+                                                              <option value="salt">salt</option>
+                                                          
+                                                            </select>
+                                                          </label>
+                                                          <span class="form-error" ng-show="addForm.city.$touched && addForm.city.$invalid">this field is required</span>
+                                                        </div>
                                                           </label>
                                                           <label class="item item-input">
                                                             <span class="input-label">Year</span>
