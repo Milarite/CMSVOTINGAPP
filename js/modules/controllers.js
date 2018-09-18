@@ -26,17 +26,22 @@ $scope.nationlIdValidation = function(_id)
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
+  if(user == true)
+
+  {
 
 
-  if(user != no_address){
+
+
+ 
 
     $scope.userFound = true;
-  }
+  
 
 
 
   
-
+  }
 }
 }
 
@@ -432,7 +437,7 @@ for(var i =0 ; i < number ;i++)
   
  
   var name = smartInstance.getCandidateName.call(address);
-  if(name)
+ // if(name)
   {
   var city = smartInstance.getCandidateCity.call(address);
   
@@ -551,7 +556,7 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
   }
 
   $scope.updateSettingsValue = function (_newValue,_data){
-      debugger;
+      
     $.LoadingOverlay('show');
     var data = null;
     switch(_data){
