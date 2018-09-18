@@ -46,9 +46,10 @@
 </script>
 <script src="js/modules/ethtx.js"></script>
 <script src="js/modules/web3.js"></script>
-<script src="js/loading.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 <script src="js/modules/firebasecom.js"></script>
+<script src="js/loading.js"></script>
+
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
                                               <script src="js/modules/service.js"></script>
@@ -63,78 +64,42 @@
                                             </head>
 
                                             <body>
-                                                    <div class="wrapper" ng-app="starter">
-                                                            <div class="main-panel" ng-controller="ViewCandidateCtrl">
-                                       <div ng-include="'shared/header.html'"></div>
-                                       <div class="content">
-                                            <div class="container-fluid">
-                                    
-                                     
-
-                                            <table class="table table-striped" style="width:100%">
-   
+                                                <div class="wrapper" ng-app="starter">
+                                                    <div class="main-panel" ng-controller="settingsCtrl">
+                               <div ng-include="'shared/header.html'"></div>
+                               <div class="content">
+                                    <div class="container-fluid">
+                                            <table class="table" style="width:100%">
+                                                <tr>
+                                                    <th>Option</th>
+                                                    <th>Submit</th>
+                                                </tr>
+                                                <tbody>
                                                     <tr>
-                                                      
-
-                                            
-                                                       <th> Candidate Name </th>
-                                                    <!--  <th >Candidate Id</th> -->
-                                                      <th>City</th>
-                                                      <th>Number of Votes</th>
-                                                     <th>Operations</th>
+                                                    <td><input type="text" class="form-control"  ng-model="numOfVotes" name="numOfVotes" id="numOfVotes" ></td>
+                                                    <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount')">Save</span></td>
+                                                </tr>
+                                                <tr>
+                                                        <td><input type="text" class="form-control" name="startDate" id="startDate"  ng-model="startDate" ></td>
+                                                        <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate')">Save</span></td>
                                                     </tr>
-                                                    <tbody ng-repeat ="x in candidates">
                                                     <tr>
-                                                      <td>  {{x.nameCandidate}} </td>
-                                                      
-                                                      
-                                                  <!-- <td> {{x.CandidateID}}</td> -->
-                                                  <td>
-                                                     {{x.City}}
-                                                    </td>
-                                                    <td>
-                                                        {{x.NumberOfVotes}}
-                                                   
-                                                      </td>
-                                                     
-                                                    
-                                                   
-                                                     
-                                                     
-                                                          <td>
-                                                            <i  ng-click="deleteCandidate(x.nationalId)"  class="fa fa-trash" style="cursor: pointer;" aria-hidden="true">
-                                                              
-                                                            </i>
-                                                            
-                                                          </td>
-                                                          </tr>
-                                                  </tbody>
-                                                  
-                                                      
-                                                     
-                                                  
-                                                  </table>
-                                        </div>
-                                 
-                                    </div>
+                                                            <td><input type="text" class="form-control" name="startTime" id="startTime" ng-model="startTime" ></td>
+                                                            <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime')">Save</span></td>
 
+                                                        </tr>
+                                                        <tr>
+                                                                <td><input type="text" class="form-control" name="endtTime" id="endTime" ng-model="endTime"></td>
+                                                                <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime')">Save</span></td>
 
-                                </div>
-                                    
-
-                                </div>
-
-                                <script>
-                                        function logout(){
-
-          
-localStorage.removeItem("candidate_nationalId" );
-localStorage.removeItem("pkAddress" );
-localStorage.removeItem("address" );
-localStorage.removeItem("role");
-window.location.href="/";
-}
-                                  </script>
+                                                            </tr>
+                                                </tbody>
+                                                </table>
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                                  </div>
+                                                
                                 </body>
 
                                 </html>

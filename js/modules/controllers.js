@@ -21,16 +21,24 @@ const smartContract = Web3jsObj.Web3SmartContract();
 $scope.nationlIdValidation = function(_id)
 {
 
+
+    if(_id)
+    {
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
+
+
 
   if(user != no_address){
 
     $scope.userFound = true;
   }
 
+
+
   
 
+}
 }
 
 
@@ -56,16 +64,6 @@ $scope.nationlIdValidation = function(_id)
 
 
 
-
-
-
-
-
-
-  
-
-
-
     
  
     
@@ -78,14 +76,13 @@ $scope.nationlIdValidation = function(_id)
 
         // create candidate wallet
         $.LoadingOverlay('show');
-        Web3jsObj.createBrainWallet(candidateData.candidateId,candidateData.password).then(function(_wallet)
     
-    {
+
 
 
                ///// add candidate function
            
-               var data =smartContract.addCandidate.getData(_wallet.address,candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
+               var data =smartContract.addCandidate.getData(candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
                 ,candidateData.city,candidateData.year,candidateData.phoneNumber,candidateData.campaign); 
             
             
@@ -132,7 +129,7 @@ $.LoadingOverlay('hide');
 
 
 
-            })
+           
       
         }
 
@@ -170,10 +167,22 @@ $.LoadingOverlay('hide');
 
 });
 
-app.controller("loginCtrl",function($scope,Web3jsObj,$window){
+app.controller("loginCtrl",function($scope,Web3jsObj,$window,FireBaseObj){
 
     ////
+ FireBaseObj.getFireBaseObj("/db").child("admin").orderByChild("ID").equalTo("1").once("value",snapshot => {
+    if (!snapshot.exists()){
+ FireBaseObj.getFireBaseObj("/db").child("admin").set({
+id : 1,
+name :"admin",
+password:"123456"
+
+ }) ;    
      
+    }
+  
+});;
+
 
 if(localStorage.getItem("role") !=undefined){
 
@@ -345,52 +354,96 @@ $scope.check = function(event,_val){
             }
           else {alert ("invalid password")};
           }
+$scope.loginAsAdmin=function(_loginForm){
 
+
+    
+}
     });
 
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole)
 
  { 
+    const judgment_address = localStorage.getItem("address");
+    const judgment_privateKey = localStorage.getItem("pkAddress");
+    Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+    Web3jsObj.Web3Facotry(rinkebyUrl);
+    
+    var smartInstance = Web3jsObj.Web3SmartContract();
+
+     $scope.deleteCandidate=function(_nationalId){
+        $.LoadingOverlay('show');
+        var data =smartInstance.deleteCandidate.getData(_nationalId); 
+
+        web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+                  
+            var tx =new ethereumjs.Tx({ 
+                data : data,
+                nonce : nonce,
+                gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+                to : contractsInfo.main,
+                value : 0,
+                gasLimit: 1000000
+                
+    
+            });
+    
+              tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+              var raw = '0x' + tx.serialize().toString('hex');
+    
+    
+              web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+
+if(!err)
+{
+
+console.log(transactionHash);
+alert("candidate deleted");
+}
+console.log(err);
+$.LoadingOverlay('hide');
+
+
+
+    });
+
+
+            
+
+
+
+        });
+
+     }
      
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined || $scope.current_role == "candidate")
    $window.location.href="/";
 
    
-//      $scope.candidates = [
 
-// {nameCandidate:"muath",City:"Amman",NumberOfVotes:10},
-// {nameCandidate:"Yaqeen",City:"Amman",NumberOfVotes:5},
-// {nameCandidate:"Yousef",City:"Amman",NumberOfVotes:3},
-// {nameCandidate:"Rajai",City:"Amman",NumberOfVotes:4},
-// {nameCandidate:"Abu Jubara",City:"Amman",NumberOfVotes:8},
-
-//      ];
-const judgment_address = localStorage.getItem("address");
-const judgment_privateKey = localStorage.getItem("pkAddress");
-
-
-
-Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
-Web3jsObj.Web3Facotry(rinkebyUrl);
-
-var smartInstance = Web3jsObj.Web3SmartContract();
 
 const numberOfCandidate = smartInstance.getCandidateNationalIDArrayLength.call();
-
 const number = numberOfCandidate.c[0];
 var items = [];
 for(var i =0 ; i < number ;i++)
 {
-  var address = smartInstance.getCandidateNationalID.call(i);
-  console.log(address)
-  var name = smartInstance.getCandidateName.call(address);
-  var city = smartInstance.getCandidateCity.call(address);
-  var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
 
-  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes  };
+  var address = smartInstance.getCandidateNationalID.call(i);
+  
+ 
+  var name = smartInstance.getCandidateName.call(address);
+  if(name)
+  {
+  var city = smartInstance.getCandidateCity.call(address);
+  
+  var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
+  var _nationalId = smartInstance.getCandidateNational.call(address);
+
+  var candidate = {nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
 
   items.push(candidate);
+  }
   //var 
 
   
@@ -431,9 +484,137 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
     Year:year,
     NumberOfVotes:NumberOfVotes,
     nameCandidate:nameCandidate,
-    campaign:campaign
+    campaign:campaign,
+    address : candidate_address
     
     
     };
 
+
 });
+app.controller("settingsCtrl",function($scope,Web3jsObj){
+    const judgment_address = localStorage.getItem("address");
+    const judgment_privateKey = localStorage.getItem("pkAddress");
+  Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+  Web3jsObj.Web3Facotry(rinkebyUrl);
+  smartInstance=Web3jsObj.Web3SmartContract();
+  
+  const counts=smartInstance.getVotesCount.call();
+  const startdate=smartInstance.getStartDate.call();
+  const StartTime=smartInstance.getStartTime.call();
+  const Endtime=smartInstance.getEndTime.call();
+
+  $scope.numOfVotes=counts;
+  $scope.startDate=startdate;
+  $scope.startTime=StartTime;
+  $scope.endTime=Endtime;
+
+$scope.UpdateSettings=function(_row)
+{
+   
+   
+// var currentCounts = $scope.numOfVotes;
+// var currentStartDate = $scope.startDate;
+// var currentStartTime = $scope.startTime;
+// var currentEndTime = $scope.endTime;
+debugger;
+    switch(_row){
+        case "votesCount":
+$scope.updateSettingsValue($scope.numOfVotes,"votesCount");
+
+        break;
+        case "startDate":
+        $scope.updateSettingsValue($scope.startDate,"startDate");
+
+        break;
+        case "startTime":
+        $scope.updateSettingsValue($scope.startTime,"startTime");
+
+        break;
+        case "endTime":
+        $scope.updateSettingsValue($scope.endTime,"endTime");
+
+        break;
+    }
+    
+
+    
+
+        
+    
+
+        
+    
+
+
+    
+
+
+
+
+       
+  }
+
+  $scope.updateSettingsValue = function (_newValue,_data){
+      debugger;
+    $.LoadingOverlay('show');
+    var data = null;
+    switch(_data){
+        case "votesCount":
+       data =  smartInstance.updateVotesCount.getData(_newValue);
+        break;
+        case "startDate":
+        data =  smartInstance.setStartDate.getData(_newValue);
+         break;
+         case "startTime":
+         data =  smartInstance.setStartTime.getData(_newValue);
+          break;
+          case "endTime":
+          data =  smartInstance.setEndTime.getData(_newValue);
+           break;
+    } 
+
+    web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+              
+        var tx =new ethereumjs.Tx({ 
+            data : data,
+            nonce : nonce,
+            gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+            to : contractsInfo.main,
+            value : 0,
+            gasLimit: 1000000
+            
+
+        });
+
+          tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+          var raw = '0x' + tx.serialize().toString('hex');
+
+
+          web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+
+if(!err)
+{
+
+console.log(transactionHash);
+alert("settings updated");
+}
+console.log(err);
+$.LoadingOverlay('hide');
+
+
+
+
+
+});
+
+
+        
+
+
+
+    });
+}
+  
+
+});  

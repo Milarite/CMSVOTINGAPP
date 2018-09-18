@@ -1,4 +1,4 @@
-0<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 	<title>VotingApp</title>
@@ -7,6 +7,7 @@
 
 
 <!--===============================================================================================-->
+
 	<link rel="stylesheet" type="text/css" href="css/util.css">
     <link rel="stylesheet" type="text/css" href="css/main.css">
     <link rel="stylesheet" type="text/css" href="css/custom.css">
@@ -42,7 +43,7 @@ type="text/javascript">
                  
 				<form class="login100-form validate-form" name="loginForm">
 					<span id="title-login" class="login100-form-title p-b-26">
-						Voting App
+						Voting App Admin 
 					</span>
 			
 <div class="row" style="text-align: center;">
@@ -50,8 +51,8 @@ type="text/javascript">
     <div class="col-md-8">
 					
                       
-						<input   class="form-control login-field" type="text" ng-model="user.NationalNumber" name="NationalNumber" required>
-                        <p ng-show="loginForm.NationalNumber.$dirty &&  loginForm.NationalNumber.$error.required">* NationalNumber is required</p>
+						<input   class="form-control login-field" type="text" ng-model="adminUserName" name="adminUserName" required>
+                        <p ng-show="loginForm.adminUserName.$dirty &&  loginForm.adminUserName.$error.required">* NationalNumber is required</p>
 					</div>
 
 					
@@ -60,33 +61,25 @@ type="text/javascript">
                             <label>Password</label>
                             <div class="col-md-8">
                            
-						<input class="form-control login-field" type="password" ng-model="user.password"  name="password" required>
-                        <p ng-show="loginForm.password.$dirty && loginForm.password.$error.required">*password is required </p>
+						<input class="form-control login-field" type="password" ng-model="adminPassword"  name="adminPassword" required>
+                        <p ng-show="loginForm.adminPassword.$dirty && loginForm.adminPassword.$error.required">*password is required </p>
                         <!-- <p ng-show="loginForm.password.$dirty && loginForm.password.$error.minlength">*Password must be longer than 6 characters </p> -->
                  
                     </div>
                     </div>
                    
-<div class="roles-area">
-                    <div class="row" >
-                            <div class=" col-md-5">
-                              </div>
-                              <div class=" col-md-4">
-                            <span >Candidate</span>
-                          <input type="radio" ng-click=check($event,'candidate')  name="candidate" ng-model="checked" value="candidate">
-                          <span>Judjment</span>
-                          <input type="radio" ng-click=check($event,'judgment') name="judgment" ng-model="checked" value="judgment">
-                          </div>
-                          </div>
-                        </div>
-					<div class="container-login100-form-btn">
-						<div class="wrap-login100-form-btn">
-							<div class="login100-form-bgbtn"></div>
-							<button ng-click="loginEmail(loginForm,user)" class="login100-form-btn" ng-disabled="((!loginForm.candidate.$dirty && !loginForm.judgment.$dirty) || loginForm.$invalid)" >
+
+                    
+<div class="container-login100-form-btn">
+        <div class="wrap-login100-form-btn">
+							
+							<button ng-click="loginAsAdmin(loginForm)"  class="btn-custom" ng-disabled="loginForm.$invalid">
 								Login
-							</button>
-						</div>
-					</div>
+                            </button>
+                            
+                        </div>
+                        </div>
+					
 
 					
 				</form>

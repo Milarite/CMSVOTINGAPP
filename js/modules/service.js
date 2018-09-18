@@ -6,6 +6,15 @@ app.service("getRole",function(){
     }
 
 });
+app.service("FireBaseObj",function(){
+
+this.getFireBaseObj = function(_ref){
+    if(_ref){
+       return firebase.database().ref(_ref);
+    }
+    return firebase.database();
+}
+})
 app.service("Web3jsObj",function(){
 
 
