@@ -476,8 +476,19 @@ $scope.candidates = items;
 
 $scope.showVotersTransactions = function(_nationalId){
     
+  const transactions = smartInstance.getCandidateVoters.call(_nationalId.toString());
+const arrayOfTransactions = [];
+  for(var i = 0 ; i <transactions.length;i++)
+  {
+      if(transactions[i] != no_address)
+      arrayOfTransactions.push(transactions[i]);
+ 
 
-
+     
+  }
+  $scope.transactions = arrayOfTransactions;
+  
+  
 $("#votersTransaction").modal('show');
 
 

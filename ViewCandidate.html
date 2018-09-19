@@ -90,7 +90,7 @@
                                                     </tr>
                                                     <tbody ng-repeat ="x in candidates">
                                                     <tr>
-                                                      <td>{{x.address}}</td>
+                                                      <td><a href="javascript:void(0)" ng-click="showVotersTransactions(x.address)">{{x.address}}</a></td>
                                                       <td><a href="javascript:void(0);" ng-click="showProfile(x.address)">{{x.nameCandidate}}
                                                         
                                                       </a></td>
@@ -126,7 +126,28 @@
                                         </div>
                                  
                                     </div>
-
+                                    <div id="votersTransaction" class="modal fade" role="dialog">
+                                        <div class="modal-dialog">
+                                      
+                                          <!-- Modal content-->
+                                          <div class="modal-content">
+                                            <div class="modal-header">
+                                              
+                                              <h4 class="modal-title">List Of Transactions</h4>
+                                            </div>
+                                            <div class="modal-body">
+                                            <ul id="votersTransactionBody" ng-repeat ="x in transactions">
+                                              <li>{{x}}</li>
+                                            </ul>
+                                        </div>
+                                            <div class="modal-footer">
+                                              <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            </div>
+                                          </div>
+                                      
+                                        </div>
+                                      </div>
+                                    
 
                                 </div>
                                     
@@ -154,25 +175,3 @@ window.location.href="/";
                                 </html>
 
                                 <!-- Modal -->
-<div id="votersTransaction" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-  
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          
-          <h4 class="modal-title">List Of Transactions</h4>
-        </div>
-        <div class="modal-body">
-        <ul id="votersTransactionBody" ng-repeat ="x in transactions">
-          <li>{{x.voterAddress}}</li>
-        </ul>
-    </div>
-        <div class="modal-footer">
-            <img src="11308248.jpg"/>
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-  
-    </div>
-  </div>
