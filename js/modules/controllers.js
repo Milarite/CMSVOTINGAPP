@@ -697,7 +697,7 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
         
             localStorage.setItem("admin",adminUser);
           
-            $window.location.href="/AdminHome.html";
+            $window.location.href="/AddJudgment.html";
         }
 
     }).catch(function(_result){
