@@ -491,9 +491,9 @@ $scope.showProfile=function(_nationalId){
 });
 
 app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window){
-    
+    debugger;
    $scope.current_role =  getRole.getCurrentRole();
-   if(localStorage.getItem("role") == undefined || $scope.current_role == "judgment")
+   if(localStorage.getItem("role") == undefined)
    $window.location.href="/";
     const judgment_address = localStorage.getItem("address");
     const judgment_privateKey = localStorage.getItem("pkAddress");
