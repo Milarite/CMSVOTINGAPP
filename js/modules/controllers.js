@@ -12,9 +12,11 @@ app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window){
    if(  localStorage.getItem("role") == undefined ||$scope.current_role == "candidate")
    $window.location.href="/";
    
-    const judgment_address = localStorage.getItem("address");
-const judgment_privateKey = localStorage.getItem("pkAddress");
-Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+    const admin_address = localStorage.getItem("adminAddress");
+const admin_privateKey = localStorage.getItem("adminPkAddress");
+
+
+Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
 Web3jsObj.Web3Facotry(rinkebyUrl);
 const smartContract = Web3jsObj.Web3SmartContract();
 
@@ -90,7 +92,7 @@ $scope.nationlIdValidation = function(_id)
                 ,candidateData.city,candidateData.year,candidateData.phoneNumber,candidateData.campaign); 
             
             
-                web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+                web3.eth.getTransactionCount(admin_address,function(err,nonce){
                   
                     var tx =new ethereumjs.Tx({ 
                         data : data,
@@ -103,7 +105,7 @@ $scope.nationlIdValidation = function(_id)
             
                     });
             
-                      tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+                      tx.sign(ethereumjs.Buffer.Buffer.from(admin_privateKey.substr(2), 'hex'));
                       var raw = '0x' + tx.serialize().toString('hex');
             
             
@@ -181,7 +183,7 @@ if(localStorage.getItem("role") !=undefined){
 
   if(localStorage.getItem("role") =="judgment"){
 
-    $window.location.href="./AddCandidate.html";
+    $window.location.href="./ViewCandidate.html";
 
   }
   else{
@@ -474,6 +476,8 @@ $scope.candidates = items;
 
 $scope.showVotersTransactions = function(_nationalId){
     
+
+
 $("#votersTransaction").modal('show');
 
 
@@ -697,8 +701,45 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
 app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 {
     const userName = localStorage.getItem("admin");
-    
+    Web3jsObj.Web3Facotry(rinkebyUrl);
+    $scope.addEtherToAdmin = function(_from,_fromPk,_to){
+        
+        var balance = web3.eth.getBalance(_to);
+        balance = web3.toDecimal(balance);
+        balance = web3.fromWei(balance, 'ether');
+      
+        if(balance < 1)
+       { 
+        web3.eth.getTransactionCount(_from,function(err,transactionCount){
 
+            var tx =new ethereumjs.Tx({ 
+           data : '',
+           nonce : transactionCount,
+           gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+           to : _to,
+           value : 2000000000000000000 ,
+           gasLimit: 1000000
+           
+
+       });
+
+         tx.sign(ethereumjs.Buffer.Buffer.from(_fromPk, 'hex'));
+         var raw = '0x' + tx.serialize().toString('hex');
+         web3.eth.sendRawTransaction(raw, function(err,result){
+            
+            if(!err){
+
+           
+            }
+
+         });
+        
+         
+    })
+  
+    }
+   
+}
 
 
     
@@ -708,7 +749,7 @@ app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
         localStorage.setItem("adminPkAddress",_wallet.privateKey);
 
         
-
+$scope.addEtherToAdmin(public_key,private_key,_wallet.address);
      });
     
 });

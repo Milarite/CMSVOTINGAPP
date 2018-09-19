@@ -2,9 +2,9 @@
 const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
 const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
 var contractsInfo  = {
-    main : "0xef013e8d2bf80b97ee7815eb7a5acf29af6ee51f",
+    main : "0x8baceb6f07cf6461448b7fe14a81120a8b284c60",
     judgment :"0x74b4442fca032dcaa1f8ab01ae02231a4848eee1",
-    voters :"0x775be4d305f413c49c01fc97aabc982a10e5bf3f",
+    voters :"0xeaeb567608e4243216f4051e16883a882a7c0266",
     candidate:"0x7f4417ab314659a2fb2e70136c453ac1cb22a845"
     
 	}
