@@ -38,6 +38,8 @@
                                             
                                                 });
                                               </script>
+                                              <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
  <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
  charset="utf-8"
  type="text/javascript">
@@ -76,18 +78,16 @@
                                                 </div>
 <script>
                                                 function logout(){
-  
-                
-                                                    localStorage.removeItem("candidate_nationalId" );
-                                                  localStorage.removeItem("pkAddress" );
-                                                  localStorage.removeItem("address" );
-                                                  localStorage.removeItem("role");
-                                                  localStorage.removeItem("adminAddress");
-                                                  localStorage.removeItem("adminPkAddress");
-                                                  localStorage.removeItem("admin");
 
-                                                  window.location.href="/";
-                                                      }
+          
+localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+window.location.href="/admin.html";
+}
 
                                                       </script>
                                             </body>

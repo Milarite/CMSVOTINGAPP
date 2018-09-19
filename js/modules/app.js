@@ -1,4 +1,4 @@
-angular.module('starter', [ 'starter.controllers','starter.services']).run(function($rootScope)
+angular.module('starter', [ 'starter.controllers','starter.services','firebase']).run(function($rootScope)
 {
 
  let role = localStorage.getItem("role");
@@ -7,8 +7,13 @@ angular.module('starter', [ 'starter.controllers','starter.services']).run(funct
      if(role == "candidate"){
          $rootScope.candidate_items = true;
      }
-     else{
+     else if(role == "judgment"){
          $rootScope.judgment_items = true;
+     }
+     else{
+         $rootScope.judgment_items = false;
+         $rootScope.candidate_items=false;
+         $rootScope.admin_items = true;
      }
  }
 

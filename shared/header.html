@@ -22,31 +22,31 @@
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" ng-if="candidate_items && !judgment_items" href="./CandidateProfile.html">
+          <a class="nav-link" ng-if="candidate_items && !judgment_items && !admin_items" href="./CandidateProfile.html">
             <i class="material-icons">person</i>
             <p>Candidate Profile</p>
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./ViewCandidate.html">
+          <a class="nav-link" ng-if="!candidate_items && (judgment_items || admin_items) "  href="./ViewCandidate.html">
             <i class="material-icons">content_paste</i>
             <p>View Candidates</p>
           </a>
         </li>
         <li class="nav-item ">
-          <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./AddCandidate.html">
+          <a class="nav-link" ng-if="!candidate_items && (judgment_items || admin_items)"  href="./AddCandidate.html">
             <i class="material-icons">library_books</i>
             <p>Add Candidate</p>
           </a>
         </li>
         <li class="nav-item ">
-                <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./AddJudgment.html">
+                <a class="nav-link" ng-if="!candidate_items && !judgment_items && admin_items"  href="./AddJudgment.html">
                   <i class="material-icons">person</i>
                   <p>Add Judgment</p>
                 </a>
               </li>
         <li class="nav-item ">
-            <a class="nav-link" ng-if="!candidate_items && judgment_items"  href="./settings.html">
+            <a class="nav-link" ng-if="!candidate_items && !judgment_items && admin_items"  href="./settings.html">
               <i class="material-icons">settings</i>
               <p>Settings</p>
             </a>

@@ -171,10 +171,10 @@ $.LoadingOverlay('hide');
 
 });
 
-app.controller("loginCtrl",function($scope,Web3jsObj,$window,FireBaseObj){
+app.controller("loginCtrl",function($scope,Web3jsObj,$window,FireBaseObj,$firebaseObject){
 
     ////
-
+    const auth =  FireBaseObj.getFireBaseAuth();
 const fireBase = FireBaseObj.getFireBaseObj("/db").child("judgments");
 
 if(localStorage.getItem("role") !=undefined){
@@ -261,7 +261,6 @@ $scope.check = function(event,_val){
 
   $scope.validation = function(_idNumber,_pass){
 
-debugger;
    
     
     Web3jsObj.web3Init(contractsInfo.main,MainAbi,null,null);
@@ -285,9 +284,7 @@ debugger;
 
     /// event
     $scope.loginEmail = function(loginForm,user){
-        
       
-        
 
         //  $rootScope.currentRole = role;
         
@@ -302,24 +299,40 @@ debugger;
 
          if($scope.role=="judgment" )
         {
-
-            fireBase.once("value", function(data) {
-                data.forEach(function(value){
-
-
-                  console.log(fireBase.child(value).once("value",function(_d){
-
-console.log(_d);
-                  }));
-
+            
+           
+      auth.signInWithEmailAndPassword(user.NationalNumber,user.password).then((result)=>{
+        $.LoadingOverlay('show');
+if(result){
+    Web3jsObj.createBrainWallet(user.NationalNumber, user.password).then(function(_wallet){
                 
+                            
+        localStorage.setItem("address", _wallet.address);
+        localStorage.setItem("pkAddress",_wallet.privateKey);
+        
 
+        $scope.addEtherToJudgment(public_key,private_key,_wallet.address);
 
-                   
+        $.LoadingOverlay('hide');
+        localStorage.setItem("role",$scope.role);
+        $window.location.href="./AddCandidate.html"
 
-                });
+    });
+}
+      }).catch((err)=>{
+          if(err)
+          {
+            alert("invalid input values");
+          }
+      });
+            
+            
 
-            });
+               
+                
+         
+
+            
             
             // $.LoadingOverlay('show');
         
@@ -456,7 +469,19 @@ for(var i =0 ; i < number ;i++)
 
   
 }
+
 $scope.candidates = items;
+
+$scope.showVotersTransactions = function(_nationalId){
+    
+$("#votersTransaction").modal('show');
+
+
+
+
+}
+
+
 
 });
 
@@ -622,6 +647,8 @@ $.LoadingOverlay('hide');
 app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window)
 {
   const auth =  FireBaseObj.getFireBaseAuth();
+
+
   auth.signOut().then(function() {
 
   });
@@ -629,7 +656,7 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
     
   auth.createUserWithEmailAndPassword("gharablipro19933@hotmail.com","P@ssw0rd").then(function(result){
 
-    
+  
 
   });
 }
@@ -689,18 +716,23 @@ app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window)
 
 {
+    const auth =  FireBaseObj.getFireBaseAuth();
 $scope.addJudgment = function(_judg){
   
     //let passEncrypted = CryptoJS.AES.encrypt(_judg.password,"HYM");
-    const fireBase = FireBaseObj.getFireBaseObj("/db").child("judgments").push( { username : _judg.UserName,
-        password : _judg.Password});
+    // const fireBase = FireBaseObj.getFireBaseObj("/db").child("judgments").push( { username : _judg.UserName,
+    //     password : _judg.Password});
+
+    auth.createUserWithEmailAndPassword(_judg.UserName,_judg.Password).then((result)=>[
+
+    ]);
 
    
 
 
     alert("judgment  added");
 
-    location.relode();
+    location.reload();
 
 
 

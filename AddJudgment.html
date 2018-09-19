@@ -38,8 +38,12 @@
                                                 
                                                     });
                                                   </script>
+                                                  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
                                                   <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
                                                   <script src="js/modules/firebasecom.js"></script>
+                                                  <script src="https://cdn.firebase.com/libs/angularfire/2.3.0/angularfire.min.js"></script>
+
  <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
  charset="utf-8"
  type="text/javascript">
@@ -114,14 +118,16 @@
 
                                         <script>
                                               function logout(){
-  
-                
-  localStorage.removeItem("candidate_nationalId" );
+
+          
+localStorage.removeItem("candidate_nationalId" );
 localStorage.removeItem("pkAddress" );
 localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
 localStorage.removeItem("role");
-window.location.href="/";
-    }
+if(role == "admin")
+window.location.href="/admin.html";
+}
                                         </script>
 
                                         </html>
