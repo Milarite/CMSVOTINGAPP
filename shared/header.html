@@ -1,6 +1,8 @@
 
     
                                             
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
+
 
 <div class="sidebar" data-color="purple" data-background-color="white" data-image="../assets/img/sidebar-1.jpg">
     <!--
@@ -23,25 +25,25 @@
         </li>
         <li class="nav-item ">
           <a class="nav-link" ng-if="candidate_items && !judgment_items && !admin_items" href="./CandidateProfile.html">
-            <i class="material-icons">person</i>
+            <i class="fas fa-stroopwafel"></i>
             <p>Candidate Profile</p>
           </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" ng-if="!candidate_items && (judgment_items || admin_items) "  href="./ViewCandidate.html">
-            <i class="material-icons">content_paste</i>
+            <i class="fas fa-eye"></i>
             <p>View Candidates</p>
           </a>
         </li>
         <li class="nav-item ">
           <a class="nav-link" ng-if="!candidate_items && (judgment_items || admin_items)"  href="./AddCandidate.html">
-            <i class="material-icons">library_books</i>
+            <i class="fas fa-plus"></i>
             <p>Add Candidate</p>
           </a>
         </li>
         <li class="nav-item ">
                 <a class="nav-link" ng-if="!candidate_items && !judgment_items && admin_items"  href="./AddJudgment.html">
-                  <i class="material-icons">person</i>
+                  <i class="fas fa-plus"></i>
                   <p>Add Judgment</p>
                 </a>
               </li>

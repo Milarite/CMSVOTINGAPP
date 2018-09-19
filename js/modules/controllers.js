@@ -382,7 +382,7 @@ if(result){
 
     });
 
-    app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole)
+    app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window)
 
  { 
     const judgment_address = localStorage.getItem("address");
@@ -481,7 +481,12 @@ $("#votersTransaction").modal('show');
 
 }
 
+$scope.showProfile=function(_nationalId){
+    $window.location.href="./CandidateProfile.html?nid="+_nationalId;
 
+
+
+}
 
 });
 
@@ -496,8 +501,16 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
   Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
-  
-  const _idNumber = localStorage.getItem("candidate_nationalId");
+  url_string=document.URL;
+  var url = new URL(url_string);
+  var Id = url.searchParams.get("nid");
+  var _idNumber=null ;
+  if(Id!=undefined){
+      _idNumber=Id
+  }else{
+   _idNumber = localStorage.getItem("candidate_nationalId");
+
+  }
   
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
   const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
