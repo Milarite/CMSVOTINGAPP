@@ -14,7 +14,9 @@
   <link rel="stylesheet" href="/resources/demos/style.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/angular-datepicker.css"/>
- 
+ <link rel="stylesheet" href= "css/angular-time-picker.min.css"/>
+ <link rel="stylesheet" href="css/md-time-picker.css"/>
+ <link rel="stylesheet" href="css/angular-moment-picker.css"/>
 
                                                 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -47,7 +49,9 @@
                                             
                                                 });
                                               </script>
-                                             
+                                             <script src="js/modules/angular-moment-picker.js"></script>
+<script src="js/modules/angular-time-picker.min.js"></script>
+<script src="js/modules/md-time-picker.js"></script>
 
                                               <!-- app module-->
                                               <script src="https://cdn.ethers.io/scripts/ethers-v3.min.js"
@@ -108,7 +112,9 @@
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate')">Save</span></td>
                                                     </tr>
                                                     <tr>
-                                                            <td><label>Start Time </label><input type="text" class="form-control timepicker" name="StartTime"ng-model="data.StartTime" ></td>
+                                                            <td><label>Start Time </label><input type="time" class="form-control " name="StartTime"ng-model="data.StartTime" ></td>
+                                                            
+                                                                   
                                                             <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime',data)">Save</span></td>
 
                                                         </tr>
