@@ -86,13 +86,12 @@ $scope.nationlIdValidation = function(_id)
 
 
 
-               ///// add candidate function
+        ///// add candidate function
            
-               var data =smartContract.addCandidate.getData(candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
-                ,candidateData.city,candidateData.year,candidateData.phoneNumber,candidateData.campaign); 
+        var data =smartContract.addCandidate.getData(candidateData.candidateId,candidateData.name,candidateData.dateOfBirth,candidateData.password
+        ,candidateData.city,candidateData.year,candidateData.phoneNumber,candidateData.campaign); 
             
-            
-                web3.eth.getTransactionCount(admin_address,function(err,nonce){
+        web3.eth.getTransactionCount(admin_address,function(err,nonce){
                   
                     var tx =new ethereumjs.Tx({ 
                         data : data,
@@ -117,12 +116,12 @@ if(!err)
  
     
 
-    (async function() {
-        debugger;
-        const minedTxReceipt = await awaitTx(web3, transactionHash);
-        alert("candidate added");
-        $.LoadingOverlay('hide');
-      })();
+    // (async function() {
+    //     
+    //     const minedTxReceipt = await awaitTx(web3, transactionHash);
+    //     alert("candidate added");
+    //     $.LoadingOverlay('hide');
+    //   })();
 }
 console.log(err);
 
@@ -411,7 +410,7 @@ if(result){
     var smartInstance = Web3jsObj.Web3SmartContract();
 
      $scope.deleteCandidate=function(_nationalId){
-         debugger;
+         
         $.LoadingOverlay('show');
         var data =smartInstance.deleteCandidate.getData(_nationalId); 
         web3.eth.getTransactionCount(admin_address,function(err,nonce){
@@ -436,11 +435,15 @@ if(!err)
 {
 
 console.log(transactionHash);
-alert("candidate deleted");
-}
+(async function() {
+    const minedTxReceipt = await awaitTx(web3, transactionHash);
+    alert("candidate deleted");    $.LoadingOverlay('hide');
+    location.reload();
+  })();
+}else{
 console.log(err);
 $.LoadingOverlay('hide');
-
+}
 
 
     });
