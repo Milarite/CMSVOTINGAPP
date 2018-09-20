@@ -90,7 +90,7 @@
                                                     </tr>
                                                     <tbody ng-repeat ="x in candidates">
                                                     <tr>
-                                                      <td><a href="javascript:void(0)" ng-click="showVotersTransactions(x.address)">{{x.address}}</a></td>
+                                                      <td>{{x.address}}</td>
                                                       <td><a href="javascript:void(0);" ng-click="showProfile(x.address)">{{x.nameCandidate}}
                                                         
                                                       </a></td>
@@ -102,7 +102,7 @@
                                                      {{x.City}}
                                                     </td>
                                                     <td>
-                                                        {{x.NumberOfVotes}}
+                                                        <a href="javascript:void(0)" ng-click="showVotersTransactions(x.address)">{{x.NumberOfVotes}}</a>
                                                    
                                                       </td>
                                                      

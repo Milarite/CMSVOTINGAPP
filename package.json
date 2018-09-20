@@ -1,0 +1,23 @@
+{
+  "name": "cmsvotingapp",
+  "version": "1.0.0",
+  "description": "new template for cms voting app created by new aeon blockchain team",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/NewAeon/CMSVOTINGAPP.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/NewAeon/CMSVOTINGAPP/issues"
+  },
+  "homepage": "https://github.com/NewAeon/CMSVOTINGAPP#readme",
+  "dependencies": {
+    "await-transaction-mined": "^1.0.11",
+    "uniq": "^1.0.1"
+  }
+}

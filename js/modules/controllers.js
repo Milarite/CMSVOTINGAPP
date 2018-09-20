@@ -12,7 +12,7 @@ app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window){
    if(  localStorage.getItem("role") == undefined ||$scope.current_role == "candidate")
    $window.location.href="/";
    
-    const admin_address = localStorage.getItem("adminAddress");
+const admin_address = localStorage.getItem("adminAddress");
 const admin_privateKey = localStorage.getItem("adminPkAddress");
 
 
@@ -114,11 +114,18 @@ $scope.nationlIdValidation = function(_id)
 if(!err)
 {
     
-    console.log(transactionHash);
-    alert("candidate added");
+ 
+    
+
+    (async function() {
+        debugger;
+        const minedTxReceipt = await awaitTx(web3, transactionHash);
+        alert("candidate added");
+        $.LoadingOverlay('hide');
+      })();
 }
 console.log(err);
-$.LoadingOverlay('hide');
+
 
 
 
@@ -196,6 +203,15 @@ if(localStorage.getItem("role") !=undefined){
 }
     ///
     Web3jsObj.Web3Facotry(rinkebyUrl);
+
+    web3.eth.filter("pending").watch(
+        function(error,result){
+            if (!error) {
+                console.log("pending" + result);
+            }
+            console.log(error);
+        }
+      ) 
     ///functions
     $scope.addEtherToJudgment = function(_from,_fromPk,_to){
         
@@ -387,9 +403,9 @@ if(result){
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window)
 
  { 
-    const judgment_address = localStorage.getItem("address");
-    const judgment_privateKey = localStorage.getItem("pkAddress");
-    Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+    const admin_address = localStorage.getItem("adminAddress");
+    const admin_privateKey = localStorage.getItem("adminPkAddress");
+    Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
     Web3jsObj.Web3Facotry(rinkebyUrl);
     
     var smartInstance = Web3jsObj.Web3SmartContract();
@@ -398,7 +414,7 @@ if(result){
         $.LoadingOverlay('show');
         var data =smartInstance.deleteCandidate.getData(_nationalId); 
 
-        web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+        web3.eth.getTransactionCount(admin_address,function(err,nonce){
                   
             var tx =new ethereumjs.Tx({ 
                 data : data,
@@ -411,7 +427,7 @@ if(result){
     
             });
     
-              tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+              tx.sign(ethereumjs.Buffer.Buffer.from(admin_privateKey.substr(2), 'hex'));
               var raw = '0x' + tx.serialize().toString('hex');
     
     
@@ -506,14 +522,14 @@ $scope.showProfile=function(_nationalId){
 });
 
 app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window){
-    debugger;
+    
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined)
    $window.location.href="/";
-    const judgment_address = localStorage.getItem("address");
-    const judgment_privateKey = localStorage.getItem("pkAddress");
+    const admin_address = localStorage.getItem("adminAddress");
+    const admin_privateKey = localStorage.getItem("pkAddress");
   
-  Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+  Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
   Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
   url_string=document.URL;
@@ -550,9 +566,9 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
 
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
-    const judgment_address = localStorage.getItem("address");
-    const judgment_privateKey = localStorage.getItem("pkAddress");
-  Web3jsObj.web3Init(contractsInfo.main,MainAbi,judgment_address,judgment_privateKey);
+    const admin_address = localStorage.getItem("adminAddress");
+    const admin_privateKey = localStorage.getItem("pkAddress");
+  Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
   Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
   
@@ -627,7 +643,7 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
            break;
     } 
 
-    web3.eth.getTransactionCount(judgment_address,function(err,nonce){
+    web3.eth.getTransactionCount(admin_address,function(err,nonce){
               
         var tx =new ethereumjs.Tx({ 
             data : data,
@@ -640,7 +656,7 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
 
         });
 
-          tx.sign(ethereumjs.Buffer.Buffer.from(judgment_privateKey.substr(2), 'hex'));
+          tx.sign(ethereumjs.Buffer.Buffer.from(admin_privateKey.substr(2), 'hex'));
           var raw = '0x' + tx.serialize().toString('hex');
 
 
