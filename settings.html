@@ -13,6 +13,7 @@
                                                 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <link rel="stylesheet" href="/resources/demos/style.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
+  <link rel="stylesheet" href="css/angular-datepicker.css"/>
  
 
                                                 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -59,6 +60,7 @@
 <script src="js/modules/firebasecom.js"></script>
 <script src="js/loading.js"></script>
 <script src="js/jquery.timepicker.js"></script>
+<script src="js/modules/angular-datepicker.js"></script>
 
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
@@ -102,7 +104,7 @@
                                                     <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount')">Save</span></td>
                                                 </tr>
                                                 <tr>
-                                                        <td><label>Start Date</label><input type="text" class="form-control" name="startDate" id="datepicker" ng-model="startDate" ></td>
+                                                        <td><label>Start Date</label><datepicker date-format="dd/MM/yyyy"><input type="text" class="form-control" name="startDate"  ng-model="startDate" ></datepicker></td>
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate')">Save</span></td>
                                                     </tr>
                                                     <tr>

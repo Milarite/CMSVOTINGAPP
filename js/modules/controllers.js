@@ -565,7 +565,7 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
     const admin_address = localStorage.getItem("adminAddress");
-    const admin_privateKey = localStorage.getItem("pkAddress");
+    const admin_privateKey = localStorage.getItem("adminPkAddress");
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
   Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();

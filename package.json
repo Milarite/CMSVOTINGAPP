@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/NewAeon/CMSVOTINGAPP#readme",
   "dependencies": {
+    "angularjs-datepicker": "^2.1.23",
     "await-transaction-mined": "^1.0.11",
     "uniq": "^1.0.1"
   }
