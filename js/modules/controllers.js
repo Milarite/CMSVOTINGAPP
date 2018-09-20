@@ -470,11 +470,7 @@ for(var i =0 ; i < number ;i++)
 
   var address = smartInstance.getCandidateNationalID.call(i);
   var name = smartInstance.getCandidateName.call(address);
-<<<<<<< HEAD
- if(name)
-=======
   if(name)
->>>>>>> 05539bb96d377721c4c5425be61337d9c1e89444
   {
   var city = smartInstance.getCandidateCity.call(address);
   
