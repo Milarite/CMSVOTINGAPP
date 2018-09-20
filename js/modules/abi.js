@@ -2,10 +2,10 @@
 const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
 const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
 var contractsInfo  = {
-    main : "0xc18145cb4c08e81a8c2f64ad33620a00800515ff",
-    judgment :"0x74b4442fca032dcaa1f8ab01ae02231a4848eee1",
-    voters :"0x3e4f38ebe26aa69963467c732b415f5ccd8a17ff",
-    candidate:"0x7f4417ab314659a2fb2e70136c453ac1cb22a845"
+    main : "0x731bd2605d625c7ced9f4032d33b1a33457a98a6",
+    judgment :"0x09be3d4e4aaeeb0e32521fe7bda73ef48a795611",
+    voters :"0xb639527c3e210d81378c9f13e05b4325e90c3e2a",
+    candidate:"0x25b77fd7ec45f6746e5766390d3e9ac554d010a9"
     
 	}
 	
@@ -66,6 +66,18 @@ var judgmentAbi =[
 		"type": "function"
 	}
 ]
+
+
+
+
+
+
+
+
+
+
+
+
 var MainAbi =[
 	{
 		"constant": false,
@@ -191,6 +203,46 @@ var MainAbi =[
 		"constant": false,
 		"inputs": [
 			{
+				"name": "nationalIdCandidate",
+				"type": "string"
+			},
+			{
+				"name": "txtHash",
+				"type": "address"
+			}
+		],
+		"name": "addTxtHashToCandidate",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "voterAddress",
+				"type": "address"
+			},
+			{
+				"name": "_txtHash",
+				"type": "address"
+			},
+			{
+				"name": "_nationalId",
+				"type": "string"
+			}
+		],
+		"name": "addTxtHashVoter",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_nationalId",
 				"type": "string"
 			}
@@ -228,6 +280,24 @@ var MainAbi =[
 			}
 		],
 		"name": "grantYourVote",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nationalIdCandidate",
+				"type": "string"
+			},
+			{
+				"name": "txtHash",
+				"type": "address"
+			}
+		],
+		"name": "removeTxtHashToCandidate",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -640,6 +710,25 @@ var MainAbi =[
 		"constant": true,
 		"inputs": [
 			{
+				"name": "candidateIdNumber",
+				"type": "string"
+			}
+		],
+		"name": "getCandidateTxtHashStatusLength",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "_candidateNationalId",
 				"type": "string"
 			}
@@ -777,6 +866,52 @@ var MainAbi =[
 		"constant": true,
 		"inputs": [
 			{
+				"name": "nationalId",
+				"type": "string"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getTxtHash",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "nationalId",
+				"type": "string"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getTxtHashFlag",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "voterAddress",
 				"type": "address"
 			},
@@ -790,6 +925,29 @@ var MainAbi =[
 			{
 				"name": "",
 				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "voterAddress",
+				"type": "address"
+			},
+			{
+				"name": "idex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVotedCandidatesTxtHash",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,
@@ -887,7 +1045,61 @@ var MainAbi =[
 		"type": "function"
 	}
 ]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var CandidateAbi=[
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "candidateIdNumber",
+				"type": "string"
+			}
+		],
+		"name": "getCandidateTxtHashStatusLength",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nationalIdCandidate",
+				"type": "string"
+			},
+			{
+				"name": "txtHash",
+				"type": "address"
+			}
+		],
+		"name": "addTxtHashToCandidate",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"constant": false,
 		"inputs": [
@@ -979,6 +1191,52 @@ var CandidateAbi=[
 		"constant": true,
 		"inputs": [
 			{
+				"name": "nationalId",
+				"type": "string"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getTxtHash",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "nationalId",
+				"type": "string"
+			},
+			{
+				"name": "index",
+				"type": "uint256"
+			}
+		],
+		"name": "getTxtHashFlag",
+		"outputs": [
+			{
+				"name": "",
+				"type": "int256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
 				"name": "_nationalId",
 				"type": "string"
 			}
@@ -1044,6 +1302,24 @@ var CandidateAbi=[
 		],
 		"payable": false,
 		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "nationalIdCandidate",
+				"type": "string"
+			},
+			{
+				"name": "txtHash",
+				"type": "address"
+			}
+		],
+		"name": "removeTxtHashToCandidate",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
 		"type": "function"
 	},
 	{
@@ -1223,7 +1499,6 @@ var CandidateAbi=[
 		"type": "function"
 	}
 ]
-
 var VoterAbi=[
 	{
 		"constant": false,
@@ -1354,6 +1629,28 @@ var VoterAbi=[
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "voterAddress",
+				"type": "address"
+			},
+			{
+				"name": "_txtHash",
+				"type": "address"
+			},
+			{
+				"name": "_nationalId",
+				"type": "string"
+			}
+		],
+		"name": "addTxtHashVoter",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"constant": true,
 		"inputs": [
 			{
@@ -1366,6 +1663,29 @@ var VoterAbi=[
 			{
 				"name": "",
 				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [
+			{
+				"name": "voterAddress",
+				"type": "address"
+			},
+			{
+				"name": "idex",
+				"type": "uint256"
+			}
+		],
+		"name": "getVotedCandidatesTxtHash",
+		"outputs": [
+			{
+				"name": "",
+				"type": "address"
 			}
 		],
 		"payable": false,

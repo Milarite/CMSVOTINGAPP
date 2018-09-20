@@ -120,6 +120,7 @@ if(!err)
     (async function() {
         
         const minedTxReceipt = await awaitTx(web3, transactionHash);
+        console.log(transactionHash);
         alert("candidate added");
         $.LoadingOverlay('hide');
       })();
