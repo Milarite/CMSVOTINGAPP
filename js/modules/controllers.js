@@ -25,6 +25,7 @@ $scope.nationlIdValidation = function(_id)
 
     if(_id)
     {
+    
   $scope.userFound=false;
   let user =smartContract.getCandidateAddressByNationalId.call(_id);
 
@@ -472,7 +473,11 @@ for(var i =0 ; i < number ;i++)
 
   var address = smartInstance.getCandidateNationalID.call(i);
   var name = smartInstance.getCandidateName.call(address);
+<<<<<<< HEAD
+ if(name)
+=======
   if(name)
+>>>>>>> 05539bb96d377721c4c5425be61337d9c1e89444
   {
   var city = smartInstance.getCandidateCity.call(address);
   
@@ -737,6 +742,15 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
 
 app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 {
+   
+    
+});
+
+app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
+
+{
+    const auth =  FireBaseObj.getFireBaseAuth();
+    ///// add wallet to admin
     const userName = localStorage.getItem("admin");
     Web3jsObj.Web3Facotry(rinkebyUrl);
     $scope.addEtherToAdmin = function(_from,_fromPk,_to){
@@ -788,13 +802,7 @@ app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
         
 $scope.addEtherToAdmin(public_key,private_key,_wallet.address);
      });
-    
-});
-
-app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window)
-
-{
-    const auth =  FireBaseObj.getFireBaseAuth();
+    /// end
 $scope.addJudgment = function(_judg){
   
     //let passEncrypted = CryptoJS.AES.encrypt(_judg.password,"HYM");
