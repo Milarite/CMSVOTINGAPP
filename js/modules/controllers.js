@@ -411,12 +411,11 @@ if(result){
     var smartInstance = Web3jsObj.Web3SmartContract();
 
      $scope.deleteCandidate=function(_nationalId){
+         debugger;
         $.LoadingOverlay('show');
         var data =smartInstance.deleteCandidate.getData(_nationalId); 
-
         web3.eth.getTransactionCount(admin_address,function(err,nonce){
-                  
-            var tx =new ethereumjs.Tx({ 
+        var tx =new ethereumjs.Tx({ 
                 data : data,
                 nonce : nonce,
                 gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
@@ -469,10 +468,8 @@ for(var i =0 ; i < number ;i++)
 {
 
   var address = smartInstance.getCandidateNationalID.call(i);
-  
- 
   var name = smartInstance.getCandidateName.call(address);
- // if(name)
+  if(name)
   {
   var city = smartInstance.getCandidateCity.call(address);
   
@@ -483,9 +480,6 @@ for(var i =0 ; i < number ;i++)
 
   items.push(candidate);
   }
-  //var 
-
-  
 }
 
 $scope.candidates = items;
