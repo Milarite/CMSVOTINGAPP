@@ -117,12 +117,12 @@ if(!err)
  
     
 
-    // (async function() {
-    //     
-    //     const minedTxReceipt = await awaitTx(web3, transactionHash);
-    //     alert("candidate added");
-    //     $.LoadingOverlay('hide');
-    //   })();
+    (async function() {
+        
+        const minedTxReceipt = await awaitTx(web3, transactionHash);
+        alert("candidate added");
+        $.LoadingOverlay('hide');
+      })();
 }
 console.log(err);
 
