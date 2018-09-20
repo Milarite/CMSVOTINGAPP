@@ -30,7 +30,7 @@
                                           <script src="./js/core/popper.min.js" type="text/javascript"></script>
                                           <script src="./js/core/bootstrap-material-design.min.js" type="text/javascript"></script>
                                           <script src="./js/plugins/perfect-scrollbar.jquery.min.js"></script>
-                                          
+                                          <script src="mined-web.js"></script>
                                           <!--  Google Maps Plugin    -->
                                           <!-- Chartist JS -->
                                           <script src="./js/plugins/chartist.min.js"></script>
@@ -100,21 +100,21 @@
                                                     <tr>
                                                     
                                                      
-                                                    <td> <label>Number Of votes </label><input type="text" class="form-control"  ng-model="numOfVotes" name="numOfVotes" id="numOfVotes" ></td>
-                                                    <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount')">Save</span></td>
+                                                    <td> <label>Number Of votes </label><input type="text" class="form-control"  ng-model="data.NumOfVotes" name="numOfVotes" id="NumOfVotes" ></td>
+                                                    <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount',data)">Save</span></td>
                                                 </tr>
                                                 <tr>
                                                         <td><label>Start Date</label><datepicker date-format="dd/MM/yyyy"><input type="text" class="form-control" name="startDate"  ng-model="startDate" ></datepicker></td>
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate')">Save</span></td>
                                                     </tr>
                                                     <tr>
-                                                            <td><label>Start Time </label><input type="text" class="form-control timepicker" name="startTime"ng-model="startTime" ></td>
-                                                            <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime')">Save</span></td>
+                                                            <td><label>Start Time </label><input type="text" class="form-control timepicker" name="StartTime"ng-model="data.StartTime" ></td>
+                                                            <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime',data)">Save</span></td>
 
                                                         </tr>
                                                         <tr>
-                                                                <td><label>End Time </label><input type="text" class="form-control timepicker " name="endtTime"   ng-model="endTime"></td>
-                                                                <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime')">Save</span></td>
+                                                                <td><label>End Time </label><input type="text" class="form-control timepicker " name="EndTime"   ng-model="data.EndTime"></td>
+                                                                <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime',data)">Save</span></td>
 
                                                             </tr>
                                                 </tbody>

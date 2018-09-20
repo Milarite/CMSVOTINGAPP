@@ -564,6 +564,7 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
 
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
+    
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
@@ -575,31 +576,36 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   const StartTime=smartInstance.getStartTime.call();
   const Endtime=smartInstance.getEndTime.call();
 
-  $scope.numOfVotes=counts;
-  $scope.startDate=startdate;
-  $scope.startTime=StartTime;
-  $scope.endTime=Endtime;
+  
 
-$scope.UpdateSettings=function(_row)
+  $scope.data = {
+    NumOfVotes : counts,
+    StartDate : startdate,
+    StartTime : StartTime,
+    EndTime : Endtime
+  }
+
+$scope.UpdateSettings=function(_row,data)
 {
    
    
 
     switch(_row){
         case "votesCount":
-$scope.updateSettingsValue($scope.numOfVotes,"votesCount");
+$scope.updateSettingsValue(data.NumOfVotes,"votesCount");
 
         break;
         case "startDate":
-        $scope.updateSettingsValue($scope.startDate,"startDate");
+        alert(data.StartDate);
+        $scope.updateSettingsValue(data.StartDate,"startDate");
 
         break;
         case "startTime":
-        $scope.updateSettingsValue($scope.startTime,"startTime");
+        $scope.updateSettingsValue(data.StartTime,"startTime");
 
         break;
         case "endTime":
-        $scope.updateSettingsValue($scope.endTime,"endTime");
+        $scope.updateSettingsValue(data.EndTime,"endTime");
 
         break;
     }
@@ -623,21 +629,22 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
   }
 
   $scope.updateSettingsValue = function (_newValue,_data){
-      
+      debugger;
+     
     $.LoadingOverlay('show');
     var data = null;
     switch(_data){
         case "votesCount":
-       data =  smartInstance.updateVotesCount.getData(_newValue);
+       data =  smartInstance.updateVotesCount.getData(_newValue.toString());
         break;
         case "startDate":
-        data =  smartInstance.setStartDate.getData(_newValue);
+        data =  smartInstance.setStartDate.getData(_newValue.toString());
          break;
          case "startTime":
-         data =  smartInstance.setStartTime.getData(_newValue);
+         data =  smartInstance.setStartTime.getData(_newValue.toString());
           break;
           case "endTime":
-          data =  smartInstance.setEndTime.getData(_newValue);
+          data =  smartInstance.setEndTime.getData(_newValue.toString());
            break;
     } 
 
@@ -661,13 +668,19 @@ $scope.updateSettingsValue($scope.numOfVotes,"votesCount");
           web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
 
 if(!err)
-{
 
-console.log(transactionHash);
-alert("settings updated");
-}
-console.log(err);
-$.LoadingOverlay('hide');
+    {
+        
+        
+    
+        (async function() {
+            
+            const minedTxReceipt = await awaitTx(web3, transactionHash);
+            alert("Settings Updated");
+            $.LoadingOverlay('hide');
+            location.reload();
+          })();
+    }
 
 
 
