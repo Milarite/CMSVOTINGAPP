@@ -596,7 +596,6 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
 
         break;
         case "startDate":
-        alert(data.StartDate);
         $scope.updateSettingsValue(data.StartDate,"startDate");
 
         break;
@@ -629,7 +628,7 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
   }
 
   $scope.updateSettingsValue = function (_newValue,_data){
-      debugger;
+      ;
      
     $.LoadingOverlay('show');
     var data = null;
