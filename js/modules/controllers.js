@@ -491,19 +491,26 @@ $scope.candidates = items;
 
 $scope.showVotersTransactions = function(_nationalId){
     
-  const transactions = smartInstance.getCandidateVoters.call(_nationalId.toString());
-const arrayOfTransactions = [];
-  for(var i = 0 ; i <transactions.length;i++)
-  {
-      if(transactions[i] != no_address)
-      arrayOfTransactions.push(transactions[i]);
- 
 
-     
-  }
-  $scope.transactions = arrayOfTransactions;
-  
-  
+
+let transactionArray = [];
+
+
+const countOfTransactionsTx = smartInstance.getCandidateTxtHashStatusLength.call(_nationalId);
+const parsingCount = JSON.parse(countOfTransactionsTx);
+
+
+for(var i =0 ; i <parsingCount ; i++){
+
+let txHash = smartInstance.getTxtHashFlag.call(_nationalId.toString(),i);
+
+transactionArray.push({hash:txHash});
+
+
+
+}
+$scope.ts = transactionArray;
+
 $("#votersTransaction").modal('show');
 
 
@@ -585,6 +592,27 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
     StartTime : StartTime,
     EndTime : Endtime
   }
+
+  $scope.settings = {
+	dropdownToggleState: false,
+	time: {
+		fromHour: '05',
+		fromMinute: '30',
+		toHour: '10',
+		toMinute: '10'
+	},
+	theme: 'dark',
+	noRange: false,
+	format: 24,
+	noValidation: false
+};
+$scope.onApplyTimePicker = function ($from) {
+    console.log('Time range applied.');
+    
+};
+$scope.onClearTimePicker = function () {
+	console.log('Time range current operation cancelled.');
+};
 
 $scope.UpdateSettings=function(_row,data)
 {

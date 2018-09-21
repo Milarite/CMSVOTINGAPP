@@ -139,8 +139,8 @@
                                               <h4 class="modal-title">List Of Transactions</h4>
                                             </div>
                                             <div class="modal-body">
-                                            <ul id="votersTransactionBody" ng-repeat ="x in transactions">
-                                              <li>{{x}}</li>
+                                            <ul id="votersTransactionBody" ng-repeat ="x in ts">
+                                              <li style="overflow-wrap: break-word;">{{x.hash}}</li>
                                             </ul>
                                         </div>
                                             <div class="modal-footer">
