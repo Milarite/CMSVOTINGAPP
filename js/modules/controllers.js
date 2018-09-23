@@ -561,6 +561,8 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
    _idNumber = localStorage.getItem("candidate_nationalId");
 
   }
+
+
   
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
   const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
@@ -577,10 +579,43 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
     Year:year,
     NumberOfVotes:NumberOfVotes,
     nameCandidate:nameCandidate,
-    campaign:campaign
+    campaign:campaign,
+   
     
     
     };
+
+    $scope.showProfileTransactions = function(){
+        let transactionArray = [];
+        let transactionRevokedArray = [];
+    
+   
+    
+    const countOfTransactionsTx = smartInstance.getCandidateTxtHashStatusLength.call(_idNumber);
+    const parsingCount = JSON.parse(countOfTransactionsTx);
+    
+    
+    for(var i =0 ; i <parsingCount ; i++){
+    
+    let txHashStatus = smartInstance.getTxtHashFlag.call(_idNumber.toString(),i);
+    let txHash = smartInstance.getTxtHash.call(_idNumber.toString(),i);
+    
+    
+    if(JSON.parse(txHashStatus) == -1)
+    {
+       
+        transactionRevokedArray.push({hash:txHash});
+    }
+    else{
+        transactionArray.push({hash:txHash});
+    }
+   
+    }
+   
+    $scope.transactionCounted = transactionArray;
+    $scope.transactionRevoked = transactionRevokedArray;
+    $("#candidateTransactions").modal('show');
+}
 
 
 });
