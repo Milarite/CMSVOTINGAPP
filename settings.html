@@ -11,22 +11,12 @@
                                                 <link href="./css/material-dashboard.css?v=2.1.0" rel="stylesheet" />
                                                 <link href="./css/custom.css" rel="stylesheet"/>
                                                 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<<<<<<< HEAD
-                                                <link rel="stylsheet" type="text/css" href="css/datetime-inputs.min.css">
-  <link rel="stylesheet" type="text/css" href="/resources/demos/style.css">
-  <link rel="stylesheet" type="text/css" href="css/jquery.timepicker.css">
-  <link rel="stylesheet" type="text/css" href="css/angular-datepicker.css">
- 
-
-
-=======
   <link rel="stylesheet" href="/resources/demos/style.css">
   <link rel="stylesheet" href="css/jquery.timepicker.css">
   <link rel="stylesheet" href="css/angular-datepicker.css"/>
  <link rel="stylesheet" href="css/md-time-picker.css"/>
  <link rel="stylesheet" href="css/angular-moment-picker.css"/>
  <link rel="stylesheet" href="css/angular-time-picker.css"/>
->>>>>>> de698ca6bd251f2d6c038512b5644e05eeca8498
 
                                                 <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
                                                 <link rel="stylesheet" href="/resources/demos/style.css">
@@ -64,12 +54,8 @@
                                               <script src="https://unpkg.com/moment@2.13.0/min/moment.min.js" charset="utf-8"></script>
                                               <script src="js/modules/datetime-inputs.min.js"></script>
                                              <script src="js/modules/angular-moment-picker.js"></script>
-<<<<<<< HEAD
-
-=======
 <script src="js/modules/md-time-picker.js"></script>
 <script src="/js/modules/angular-time-picker.js"></script>
->>>>>>> de698ca6bd251f2d6c038512b5644e05eeca8498
 
 
                                               <!-- app module-->
@@ -127,15 +113,11 @@
                                                     <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount',data)">Save</span></td>
                                                 </tr>
                                                 <tr>
-                                                        <td><label>Start Date</label><datepicker date-format="dd/MM/yyyy"><input type="text" class="form-control" name="StartDate"  ng-model="data.StartDate" ></datepicker></td>
+                                                        <td><label>Select  Date</label><datepicker date-format="dd/MM/yyyy"><input type="text" class="form-control" name="StartDate"  ng-model="data.StartDate" ></datepicker></td>
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate',data)">Save</span></td>
                                                     </tr>
                                                     <tr>
-<<<<<<< HEAD
-                                                            <td><label>Start Time </label> <time-input time="now"  placeholder="changeTime"> </time-input></td>
-                                                           
-=======
-                                                        <td><label>Start Time</label> <wy-time-picker
+                                                        <td><label>Select Time</label> <wy-time-picker
                                                             data-dropdown-toggle-state="settings.dropdownToggleState"
                                                             data-time-settings="settings.time"
                                                             data-theme="settings.theme"
@@ -147,14 +129,13 @@
                                                         </wy-time-picker></label></td>
                                                             <!-- <td><label>Start Time </label><input type="text" class="form-control" dn-timepicker="h:mm a" name="StartTime" ng-model="data.StartTime" ></td> -->
                                                             
->>>>>>> de698ca6bd251f2d6c038512b5644e05eeca8498
                                                                    
                                                             <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime',data)">Save</span></td>
 
                                                         </tr>
                                                         <tr>
-                                                                <td><label>End Time </label><input type="text" class="form-control timepicker " name="EndTime"   ng-model="data.EndTime"></td>
-                                                                <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime',data)">Save</span></td>
+                                                                <!-- <td><label>End Time </label><input type="text" class="form-control timepicker " name="EndTime"   ng-model="data.EndTime"></td>
+                                                                <td><span style="cursor:pointer;"  ng-click="UpdateSettings('endTime',data)">Save</span></td> -->
 
                                                             </tr>
                                                 </tbody>
