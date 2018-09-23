@@ -494,6 +494,8 @@ $scope.showVotersTransactions = function(_nationalId){
 
 
 let transactionArray = [];
+let transactionRevokedArray = [];
+
 
 
 const countOfTransactionsTx = smartInstance.getCandidateTxtHashStatusLength.call(_nationalId);
@@ -502,14 +504,25 @@ const parsingCount = JSON.parse(countOfTransactionsTx);
 
 for(var i =0 ; i <parsingCount ; i++){
 
-let txHash = smartInstance.getTxtHashFlag.call(_nationalId.toString(),i);
+let txHashStatus = smartInstance.getTxtHashFlag.call(_nationalId.toString(),i);
+let txHash = smartInstance.getTxtHash.call(_nationalId.toString(),i);
 
-transactionArray.push({hash:txHash});
+if(JSON.parse(txHashStatus) == -1)
+{
+   
+    transactionRevokedArray.push({hash:txHash});
+}
+else{
+    transactionArray.push({hash:txHash});
+}
+
+
 
 
 
 }
 $scope.ts = transactionArray;
+$scope.tsr=transactionRevokedArray;
 
 $("#votersTransaction").modal('show');
 

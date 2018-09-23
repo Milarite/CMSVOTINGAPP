@@ -52,6 +52,8 @@
 <script src="js/loading.js"></script>
 <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 <script src="js/modules/firebasecom.js"></script>
+<script src="/js/modules/angular-time-picker.js"></script>
+
 
 <script src="js/modules/angular-datepicker.js"></script>
 
@@ -139,9 +141,14 @@
                                               <h4 class="modal-title">List Of Transactions</h4>
                                             </div>
                                             <div class="modal-body">
+                                                <h3>Transactions Counted</h3>
                                             <ul id="votersTransactionBody" ng-repeat ="x in ts">
-                                              <li style="overflow-wrap: break-word;">{{x.hash}}</li>
+                                                    <li style="overflow-wrap: break-word;"><a href="https://rinkeby.etherscan.io/tx/{{x.hash}}">{{x.hash}}</a></li>
                                             </ul>
+                                            <h3>Revoked Transactions</h3>
+                                            <ul id="votersTransactionBody" ng-repeat ="x in tsr">
+                                                    <li style="overflow-wrap: break-word;"><a href="https://rinkeby.etherscan.io/tx/{{x.hash}}">{{x.hash}}</a></li>
+                                                  </ul>
                                         </div>
                                             <div class="modal-footer">
                                               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
