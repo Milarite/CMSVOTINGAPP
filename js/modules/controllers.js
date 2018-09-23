@@ -632,10 +632,10 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
         $scope.updateSettingsValue(data.StartTime,"startTime");
 
         break;
-        case "endTime":
-        $scope.updateSettingsValue(data.EndTime,"endTime");
+        // case "endTime":
+        // $scope.updateSettingsValue(data.EndTime,"endTime");
 
-        break;
+        // break;
     }
     
 
