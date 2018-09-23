@@ -126,11 +126,13 @@
                                                             data-no-validation="settings.noValidation"
                                                             data-apply-callback="onApplyTimePicker()"
                                                             data-clear-callback="onClearTimePicker()">
-                                                        </wy-time-picker></label></td>
+                                                        </wy-time-picker></label>
+                                                        <input type="text" readonly class="form-control" ng-model="period">
+                                                    </td>
                                                             <!-- <td><label>Start Time </label><input type="text" class="form-control" dn-timepicker="h:mm a" name="StartTime" ng-model="data.StartTime" ></td> -->
                                                             
                                                                    
-                                                            <td><span style="cursor:pointer;"  ng-click="UpdateSettings('startTime',data)">Save</span></td>
+                                                            <td><span style="cursor:pointer;"  ng-click="UpdateSettings('period',data)">Save</span></td>
 
                                                         </tr>
                                                         <tr>

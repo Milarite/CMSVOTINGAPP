@@ -594,16 +594,16 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   
   const counts=smartInstance.getVotesCount.call();
   const startdate=smartInstance.getStartDate.call();
-  const StartTime=smartInstance.getStartTime.call();
-  const Endtime=smartInstance.getEndTime.call();
+  const period=smartInstance.getStartTime.call();
+//   const Endtime=smartInstance.getEndTime.call();
 
   
 
   $scope.data = {
     NumOfVotes : counts,
     StartDate : startdate,
-    StartTime : StartTime,
-    EndTime : Endtime
+    period : period,
+    
   }
 
   $scope.settings = {
@@ -620,7 +620,7 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
 	noValidation: false
 };
 $scope.onApplyTimePicker = function ($from) {
-    console.log('Time range applied.');
+    $scope.period=$scope.settings.time.fromHour + ":" +$scope.settings.time.fromMinute +"-"+$scope.settings.time.toHour + ":" +$scope.settings.time.toMinute ; 
     
 };
 $scope.onClearTimePicker = function () {
@@ -641,8 +641,8 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
         $scope.updateSettingsValue(data.StartDate,"startDate");
 
         break;
-        case "startTime":
-        $scope.updateSettingsValue(data.StartTime,"startTime");
+        case "period":
+        $scope.updateSettingsValue(data.period,"period");
 
         break;
         // case "endTime":
@@ -681,12 +681,10 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
         case "startDate":
         data =  smartInstance.setStartDate.getData(_newValue.toString());
          break;
-         case "startTime":
+         case "period":
          data =  smartInstance.setStartTime.getData(_newValue.toString());
           break;
-          case "endTime":
-          data =  smartInstance.setEndTime.getData(_newValue.toString());
-           break;
+        
     } 
 
     web3.eth.getTransactionCount(admin_address,function(err,nonce){
