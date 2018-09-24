@@ -1,4 +1,27 @@
 var app=angular.module('starter.services',[]);
+
+app.service("Helper",function(){
+
+    this.ConvertDateToTimeStamp = function (_date){
+
+        var myDate=_date;
+        myDate=myDate.split("-");
+        var newDate=myDate[1]+"/"+myDate[0]+"/"+myDate[2];
+        return new Date(newDate).getTime()
+
+    }
+
+    this.isFirstDateGreaterThanSecond = function(_date1,_date2){
+  
+        let firstDate = _date1.split("/");
+        let secondDate = _date2.split("/");
+        let Date1 = new Date(_date1[1],_date1[0],_date1[2]);
+        let Date2 = new Date(_date2[1],_date2[0],_date2[2]);
+
+        return Date1 > Date2;
+
+    }
+});
 app.service("getRole",function(){
 
     this.getCurrentRole = function(){

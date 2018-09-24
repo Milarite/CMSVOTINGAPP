@@ -74,6 +74,7 @@
                                               <script src="js/modules/abi.js"></script>
                                               <script src="js/modules/app.js"></script>
                                               <script src="js/modules/service.js"></script>
+                                              <script src="js/modules/directives.js"></script>
                                               <script src="js/modules/controllers.js"></script>
                                               
 
@@ -109,9 +110,15 @@
                                                     <tr>
                                                     
                                                      
-                                                    <td> <label>Number Of votes </label><input type="text" class="form-control"  ng-model="data.NumOfVotes" name="numOfVotes" id="NumOfVotes" ></td>
+                                                    <td> <label>Number Of votes </label><input type="text" class="form-control"  numbers-only ng-model="data.NumOfVotes" name="numOfVotes" id="NumOfVotes" ></td>
                                                     <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount',data)">Save</span></td>
                                                 </tr>
+                                                <tr>
+                                                    
+                                                     
+                                                        <td> <label>Threshold</label><input type="text" numbers-only class="form-control"  ng-model="data.Threshold" name="Threshold" id="Threshold" ></td>
+                                                        <td><span style="cursor:pointer;"  ng-click="UpdateSettings('Threshold',data)">Save</span></td>
+                                                    </tr>
                                                 <tr>
                                                         <td><label>Select  Date</label><datepicker date-format="dd/MM/yyyy"><input type="text" class="form-control" name="StartDate"  ng-model="data.StartDate" ></datepicker></td>
                                                         <td><span style="cursor:pointer;" ng-click="UpdateSettings('startDate',data)">Save</span></td>
@@ -127,7 +134,7 @@
                                                             data-apply-callback="onApplyTimePicker()"
                                                             data-clear-callback="onClearTimePicker()">
                                                         </wy-time-picker></label>
-                                                        <input type="text" readonly class="form-control" ng-model="period">
+                                                        <input type="text" readonly class="form-control" ng-model="data.period">
                                                     </td>
                                                             <!-- <td><label>Start Time </label><input type="text" class="form-control" dn-timepicker="h:mm a" name="StartTime" ng-model="data.StartTime" ></td> -->
                                                             

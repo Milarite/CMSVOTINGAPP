@@ -1,4 +1,4 @@
-angular.module('starter', [ 'starter.controllers','starter.services','firebase','720kb.datepicker','wingify.timePicker']).run(function($rootScope)
+angular.module('starter', [ 'starter.controllers','starter.services','starter.directives','firebase','720kb.datepicker','wingify.timePicker']).run(function($rootScope)
 {
 
  let role = localStorage.getItem("role");

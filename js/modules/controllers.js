@@ -477,8 +477,9 @@ for(var i =0 ; i < number ;i++)
   if(name)
   {
   var city = smartInstance.getCandidateCity.call(address);
-  
+
   var numberOfVotes = smartInstance.getCandidateVotesNumber.call(address);
+  
   var _nationalId = smartInstance.getCandidateNational.call(address);
 
   var candidate = {address:address,nameCandidate : name , City :city, NumberOfVotes : numberOfVotes ,nationalId : _nationalId };
@@ -540,7 +541,7 @@ $scope.showProfile=function(_nationalId){
 
 });
 
-app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window){
+app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,Helper){
     
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined)
@@ -585,14 +586,24 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window)
     
     };
 
+    $scope.ElectionStatus = function(){
+        const counts=smartInstance.getVotesCount.call();
+        const startdate=smartInstance.getStartDate.call();
+        const period=smartInstance.getPeriod.call();
+        const periodSplited = period.split("-");
+        const from = periodSplited[0];
+        const to = periodSplited[1];
+        const fromHoursAsMinutes = parseInt(from.split(":")[0]) * 60;
+        return fromHoursAsMinutes;
+    }
+
+    
+
     $scope.showProfileTransactions = function(){
         let transactionArray = [];
         let transactionRevokedArray = [];
-    
-   
-    
-    const countOfTransactionsTx = smartInstance.getCandidateTxtHashStatusLength.call(_idNumber);
-    const parsingCount = JSON.parse(countOfTransactionsTx);
+        const countOfTransactionsTx = smartInstance.getCandidateTxtHashStatusLength.call(_idNumber);
+        const parsingCount = JSON.parse(countOfTransactionsTx);
     
     
     for(var i =0 ; i <parsingCount ; i++){
@@ -629,7 +640,9 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   
   const counts=smartInstance.getVotesCount.call();
   const startdate=smartInstance.getStartDate.call();
-  const period=smartInstance.getStartTime.call();
+  const period=smartInstance.getPeriod.call();
+  const Threshold = smartInstance.getPercentageOfVoters.call();
+  
 //   const Endtime=smartInstance.getEndTime.call();
 
   
@@ -638,6 +651,7 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
     NumOfVotes : counts,
     StartDate : startdate,
     period : period,
+    Threshold : Threshold +"%"
     
   }
 
@@ -654,9 +668,10 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
 	format: 24,
 	noValidation: false
 };
+
 $scope.onApplyTimePicker = function ($from) {
-    $scope.period=$scope.settings.time.fromHour + ":" +$scope.settings.time.fromMinute +"-"+$scope.settings.time.toHour + ":" +$scope.settings.time.toMinute ; 
-    
+    $scope.changedTime = $scope.settings.time.fromHour +":"+$scope.settings.time.fromMinute +"-"+$scope.settings.time.toHour +":"+$scope.settings.time.toMinute;
+
 };
 $scope.onClearTimePicker = function () {
 	console.log('Time range current operation cancelled.');
@@ -677,13 +692,14 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
 
         break;
         case "period":
-        $scope.updateSettingsValue(data.period,"period");
+        
+        $scope.updateSettingsValue($scope.changedTime,"period");
 
         break;
-        // case "endTime":
-        // $scope.updateSettingsValue(data.EndTime,"endTime");
+         case "Threshold":
+         $scope.updateSettingsValue(data.Threshold,"Threshold");
 
-        // break;
+         break;
     }
     
 
@@ -705,7 +721,7 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
   }
 
   $scope.updateSettingsValue = function (_newValue,_data){
-      ;
+      
      
     $.LoadingOverlay('show');
     var data = null;
@@ -717,7 +733,12 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
         data =  smartInstance.setStartDate.getData(_newValue.toString());
          break;
          case "period":
-         data =  smartInstance.setStartTime.getData(_newValue.toString());
+         data =  smartInstance.setPeriod.getData(_newValue.toString());
+          break;
+
+          case "Threshold":
+          data =  smartInstance.setPercentageOfVoters.getData(_newValue.toString());
+ 
           break;
         
     } 
@@ -773,8 +794,9 @@ if(!err)
 
 });  
 
-app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window)
+app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 {
+    Web3jsObj.Web3Facotry(rinkebyUrl);
   const auth =  FireBaseObj.getFireBaseAuth();
 
 
@@ -790,9 +812,55 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
   });
 }
 
+$scope.addEtherToAdmin = function(_from,_fromPk,_to,_adminUser){
+        
+    var balance = web3.eth.getBalance(_to);
+    balance = web3.toDecimal(balance);
+    balance = web3.fromWei(balance, 'ether');
+  
+    if(balance < 1)
+   { 
+    web3.eth.getTransactionCount(_from,function(err,transactionCount){
+
+        var tx =new ethereumjs.Tx({ 
+       data : '',
+       nonce : transactionCount,
+       gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+       to : _to,
+       value : 2000000000000000000 ,
+       gasLimit: 1000000
+       
+
+   });
+
+     tx.sign(ethereumjs.Buffer.Buffer.from(_fromPk, 'hex'));
+     var raw = '0x' + tx.serialize().toString('hex');
+     web3.eth.sendRawTransaction(raw, function(err,result){
+        
+        if(!err){
+            localStorage.setItem("admin",_adminUser);
+      
+            $window.location.href="/AddJudgment.html";
+            
+        }
+
+     });
+    
+     
+})
+
+}
+else{
+    localStorage.setItem("admin",_adminUser);
+      
+            $window.location.href="/AddJudgment.html";
+}
+
+}
+
   $scope.loginAsAdmin=function(_loginForm,_user){
-
-
+   
+ 
     auth.signInWithEmailAndPassword(_user.adminEmail,_user.adminPassword).then(function(_result){
 
         if(_result.user.email)
@@ -805,11 +873,17 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
             localStorage.setItem("role","admin");
 
 
-            
+            Web3jsObj.createBrainWallet(adminUser, "P@ssw0rd").then(function(_wallet){
+
+                localStorage.setItem("adminAddress", _wallet.address);
+                localStorage.setItem("adminPkAddress",_wallet.privateKey);
         
-            localStorage.setItem("admin",adminUser);
-          
-            $window.location.href="/AddJudgment.html";
+                
+        $scope.addEtherToAdmin(public_key,private_key,_wallet.address,adminUser);
+        
+             });
+        
+           
         }
 
     }).catch(function(_result){
@@ -823,11 +897,7 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
 });
 
 
-app.controller("AdminHomeCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
-{
-   
-    
-});
+
 
 app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 

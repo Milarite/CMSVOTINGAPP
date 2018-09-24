@@ -2,10 +2,10 @@
 const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
 const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
 var contractsInfo  = {
-    main : "0x60913c082767d4db671e6492a047f5adc955bb14",
-    judgment :"0x3134d9c6f3eeaac89132f2b527208fc8e7dfd0f3",
-    voters :"0xd80a7c536f214a86747636f6cefe0ccdd523f2e2",
-    candidate:"0xb39e9c7a79e7f4ba41a004ef38ac9a0f19290ba5"
+    main : "0x974a5baa3752ea0b736058dc81b48cec0e7ccada",
+    judgment :"0x208ff447319ef3a8ca7b286430d426dd8789783a",
+    voters :"0x815dd850235ba1d53202069698bcb99eb8f69f7b",
+    candidate:"0xaa8ec0f5e3ed5b2fb6235b1ea0d7a5175d25f458"
     
 	}
 	
@@ -66,21 +66,6 @@ var judgmentAbi =[
 		"type": "function"
 	}
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var MainAbi =[
 	{
 		"constant": false,
@@ -360,11 +345,11 @@ var MainAbi =[
 		"constant": false,
 		"inputs": [
 			{
-				"name": "_startDate",
+				"name": "_percentage",
 				"type": "string"
 			}
 		],
-		"name": "setStartDate",
+		"name": "setPercentageOfVoters",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -378,7 +363,21 @@ var MainAbi =[
 				"type": "string"
 			}
 		],
-		"name": "setStartTime",
+		"name": "setPeriod",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_startDate",
+				"type": "string"
+			}
+		],
+		"name": "setStartDate",
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
@@ -423,6 +422,29 @@ var MainAbi =[
 		"type": "function"
 	},
 	{
+		"constant": false,
+		"inputs": [],
+		"name": "startElection",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "_votesCount",
+				"type": "uint256"
+			}
+		],
+		"name": "updateVotesCount",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"name": "_candidate",
@@ -440,20 +462,6 @@ var MainAbi =[
 		"payable": false,
 		"stateMutability": "nonpayable",
 		"type": "constructor"
-	},
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_votesCount",
-				"type": "uint256"
-			}
-		],
-		"name": "updateVotesCount",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
 	},
 	{
 		"constant": true,
@@ -537,6 +545,20 @@ var MainAbi =[
 			{
 				"name": "",
 				"type": "bool"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "ElectionStartTime",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -788,6 +810,34 @@ var MainAbi =[
 	{
 		"constant": true,
 		"inputs": [],
+		"name": "getCurrentTime",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getElectionStartTime",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
 		"name": "getEndTime",
 		"outputs": [
 			{
@@ -820,6 +870,20 @@ var MainAbi =[
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "getNumberOfVoters",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "_address",
@@ -840,7 +904,7 @@ var MainAbi =[
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "getStartDate",
+		"name": "getPercentageOfVoters",
 		"outputs": [
 			{
 				"name": "",
@@ -854,7 +918,21 @@ var MainAbi =[
 	{
 		"constant": true,
 		"inputs": [],
-		"name": "getStartTime",
+		"name": "getPeriod",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getStartDate",
 		"outputs": [
 			{
 				"name": "",
@@ -1046,25 +1124,36 @@ var MainAbi =[
 		"payable": false,
 		"stateMutability": "view",
 		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "PercentageOfVoters",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "winnerCandidate",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
 	}
 ]
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var CandidateAbi=[
 	{
 		"constant": true,
@@ -1373,6 +1462,20 @@ var CandidateAbi=[
 	},
 	{
 		"constant": true,
+		"inputs": [],
+		"name": "winnerCandidate",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
 		"inputs": [
 			{
 				"name": "_nationalId",
@@ -1502,31 +1605,7 @@ var CandidateAbi=[
 		"type": "function"
 	}
 ]
-
-
-
-
-
-
-
-
-
-
 var VoterAbi=[
-	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_startTime",
-				"type": "string"
-			}
-		],
-		"name": "setStartTime",
-		"outputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
 	{
 		"constant": true,
 		"inputs": [
@@ -1595,6 +1674,20 @@ var VoterAbi=[
 			{
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getPeriod",
+		"outputs": [
+			{
+				"name": "",
+				"type": "string"
 			}
 		],
 		"payable": false,
@@ -1839,6 +1932,20 @@ var VoterAbi=[
 		"constant": false,
 		"inputs": [
 			{
+				"name": "_period",
+				"type": "string"
+			}
+		],
+		"name": "setPeriod",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
 				"name": "_startDate",
 				"type": "string"
 			}
@@ -1876,6 +1983,20 @@ var VoterAbi=[
 			{
 				"name": "",
 				"type": "string"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "getNumberOfVoters",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"payable": false,
@@ -1936,20 +2057,6 @@ var VoterAbi=[
 	},
 	{
 		"constant": true,
-		"inputs": [],
-		"name": "getStartTime",
-		"outputs": [
-			{
-				"name": "",
-				"type": "string"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"constant": true,
 		"inputs": [
 			{
 				"name": "nationalID",
@@ -1995,6 +2102,20 @@ var VoterAbi=[
 		"outputs": [],
 		"payable": false,
 		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": true,
+		"inputs": [],
+		"name": "NumberOfVoters",
+		"outputs": [
+			{
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"payable": false,
+		"stateMutability": "view",
 		"type": "function"
 	},
 	{
