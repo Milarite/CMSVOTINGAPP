@@ -572,6 +572,31 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
   const NumberOfVotes=smartInstance.getCandidateVotesNumber.call(_idNumber);
   const nameCandidate=smartInstance.getCandidateName.call(_idNumber);
   const campaign=smartInstance.getCandidateCampaign.call(_idNumber);
+
+
+  ///// get election status 
+
+  /// get time from blockchain
+  const currentTime = smartInstance.getCurrentTime.call();
+  const startDate = smartInstance.getStartDate.call();
+  const startDateSplited = startDate.split("/");
+  const startDateFormated = startDateSplited[1]+"/"+startDateSplited[0]+"/"+startDateSplited[2];
+
+
+  const currentTimeHuman = Helper.ConvertTimeStampToDate(currentTime);
+  
+
+  
+
+
+
+
+
+
+
+
+
+  ///// end of election status
   
   $scope.candidateProfile = {
     NationalNumber : _idNumber,
@@ -580,11 +605,13 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
     Year:year,
     NumberOfVotes:NumberOfVotes,
     nameCandidate:nameCandidate,
-    campaign:campaign,
+    campaign:campaign
    
     
     
     };
+
+
 
     $scope.ElectionStatus = function(){
         const counts=smartInstance.getVotesCount.call();
@@ -642,16 +669,20 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   const startdate=smartInstance.getStartDate.call();
   const period=smartInstance.getPeriod.call();
   const Threshold = smartInstance.getPercentageOfVoters.call();
-  
-//   const Endtime=smartInstance.getEndTime.call();
+  const isChecked = smartInstance.getThresholdFlag.call();
+  $scope.isOptional = isChecked;
+  //   const Endtime=smartInstance.getEndTime.call();
 
-  
+  $scope.IsThresholdEnabled = function($event){
+      $scope.isOptional = $event.target.checked;
+  }
 
   $scope.data = {
     NumOfVotes : counts,
     StartDate : startdate,
     period : period,
-    Threshold : Threshold +"%"
+    Threshold : Threshold +"%",
+    isChecked:isChecked
     
   }
 
@@ -697,7 +728,12 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
 
         break;
          case "Threshold":
+       
+         
+    
          $scope.updateSettingsValue(data.Threshold,"Threshold");
+         
+         
 
          break;
     }
@@ -728,21 +764,78 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
     switch(_data){
         case "votesCount":
        data =  smartInstance.updateVotesCount.getData(_newValue.toString());
-        break;
-        case "startDate":
-        data =  smartInstance.setStartDate.getData(_newValue.toString());
+         break;
+         case "startDate":
+         data =  smartInstance.setStartDate.getData(_newValue.toString());
          break;
          case "period":
-         data =  smartInstance.setPeriod.getData(_newValue.toString());
+          data =  smartInstance.setPeriod.getData(_newValue.toString());
           break;
 
           case "Threshold":
+          debugger;
+if(!$scope.isOptional)
+{
           data =  smartInstance.setPercentageOfVoters.getData(_newValue.toString());
+}
+$scope.updateThresHold($scope.isOptional);
+
  
           break;
         
     } 
 
+    web3.eth.getTransactionCount(admin_address,function(err,nonce){
+              
+        var tx =new ethereumjs.Tx({ 
+            data : data,
+            nonce : nonce,
+            gasPrice :web3.toHex(web3.toWei('20', 'gwei')),
+            to : contractsInfo.main,
+            value : 0,
+            gasLimit: 1000000
+            
+
+        });
+
+          tx.sign(ethereumjs.Buffer.Buffer.from(admin_privateKey.substr(2), 'hex'));
+          var raw = '0x' + tx.serialize().toString('hex');
+
+
+          web3.eth.sendRawTransaction(raw, function (err, transactionHash) {
+
+if(!err)
+
+    {
+        
+        
+    
+        (async function() {
+            
+            const minedTxReceipt = await awaitTx(web3, transactionHash);
+            alert("Settings Updated");
+            $.LoadingOverlay('hide');
+            location.reload();
+          })();
+    }
+
+
+
+
+
+});
+
+
+        
+
+
+
+    });
+}
+
+
+$scope.updateThresHold = function (_val){
+    data = smartInstance.setThresholdFlag.getData(_val);
     web3.eth.getTransactionCount(admin_address,function(err,nonce){
               
         var tx =new ethereumjs.Tx({ 

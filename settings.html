@@ -113,10 +113,17 @@
                                                     <td> <label>Number Of votes </label><input type="text" class="form-control"  numbers-only ng-model="data.NumOfVotes" name="numOfVotes" id="NumOfVotes" ></td>
                                                     <td><span style="cursor:pointer;"  ng-click="UpdateSettings('votesCount',data)">Save</span></td>
                                                 </tr>
+                                              
                                                 <tr>
-                                                    
-                                                     
-                                                        <td> <label>Threshold</label><input type="text" numbers-only class="form-control"  ng-model="data.Threshold" name="Threshold" id="Threshold" ></td>
+                                                   
+                                                        <td> 
+
+                                                            <input type="checkbox" ng-click="IsThresholdEnabled($event)" ng-checked="data.isChecked" ng-model="isOptional" name="isOptional" id="isOptional"/>
+                                                            Is Optional
+                                                               
+                                                            <label>Threshold</label><input  ng-disabled ="isOptional" type="text" numbers-only class="form-control"  ng-model="data.Threshold" name="Threshold" id="Threshold" >
+                                                        
+                                                        </td>
                                                         <td><span style="cursor:pointer;"  ng-click="UpdateSettings('Threshold',data)">Save</span></td>
                                                     </tr>
                                                 <tr>

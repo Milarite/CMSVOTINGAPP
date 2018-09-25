@@ -11,6 +11,25 @@ app.service("Helper",function(){
 
     }
 
+    this.ConvertTimeStampToDate = function (_timeStamp){
+        let d =  new Date(_timeStamp * 1000);
+        return moment(d).format("DD/MM/YYYY");
+    }
+
+    this.formatDate = function (date){
+        var d = new Date(date);
+        
+        month = '' + (d.getMonth() + 1);
+        day = '' + d.getDate();
+
+        year = d.getFullYear();
+
+    if (month.length < 2) month = '0' + month;
+    if (day.length < 2) day = '0' + day;
+
+    return [day,month,year].join('-');
+    }
+
     this.isFirstDateGreaterThanSecond = function(_date1,_date2){
   
         let firstDate = _date1.split("/");
