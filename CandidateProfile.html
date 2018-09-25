@@ -91,6 +91,7 @@
                                                         <h4><b>Year: {{candidateProfile.Year}}</b></h4>
                                                         <h4><b>Number Of Votes: {{candidateProfile.NumberOfVotes}}</b></h4>
                                                         <h4><b>campaign: {{candidateProfile.campaign}}</b></h4>
+                                                        <h4 ng-if="isWinner">You Are the winner</h4>
                                                     </div>
                                                     <div style="clear:both; width:100%; text-align: center;  margin-top: 10px;">
                                                     <u><a style="color:white;" href="javascript:void(0)" ng-click="showProfileTransactions()" >Show Transactions History</a></u>

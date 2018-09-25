@@ -555,6 +555,7 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
   url_string=document.URL;
   var url = new URL(url_string);
   var Id = url.searchParams.get("nid");
+  const NationalIdOFTheWinner=smartInstance.winnerCandidate.call();
   var _idNumber=null ;
   if(Id!=undefined){
       _idNumber=Id
@@ -562,8 +563,8 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
    _idNumber = localStorage.getItem("candidate_nationalId");
 
   }
-
-
+$scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
+:false;
   
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
   const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
@@ -610,6 +611,11 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
     
     
     };
+  
+  
+        
+        
+    
 
 
 
@@ -814,6 +820,8 @@ if(!err)
             
             const minedTxReceipt = await awaitTx(web3, transactionHash);
             alert("Settings Updated");
+            console.log(startdate);
+            console.log(period);
             $.LoadingOverlay('hide');
             location.reload();
           })();
