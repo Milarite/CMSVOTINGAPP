@@ -17,7 +17,7 @@ const admin_privateKey = localStorage.getItem("adminPkAddress");
 
 
 Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-Web3jsObj.Web3Facotry(rinkebyUrl);
+Web3jsObj.Web3Facotry(mainnet);
 const smartContract = Web3jsObj.Web3SmartContract();
 
 $scope.nationlIdValidation = function(_id)
@@ -203,7 +203,7 @@ if(localStorage.getItem("role") !=undefined){
   return;
 }
     ///
-    Web3jsObj.Web3Facotry(rinkebyUrl);
+    Web3jsObj.Web3Facotry(mainnet);
 
     web3.eth.filter("pending").watch(
         function(error,result){
@@ -407,7 +407,7 @@ if(result){
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
     Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-    Web3jsObj.Web3Facotry(rinkebyUrl);
+    Web3jsObj.Web3Facotry(mainnet);
     
     var smartInstance = Web3jsObj.Web3SmartContract();
 
@@ -550,7 +550,7 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
     const admin_privateKey = localStorage.getItem("pkAddress");
   
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-  Web3jsObj.Web3Facotry(rinkebyUrl);
+  Web3jsObj.Web3Facotry(mainnet);
   smartInstance=Web3jsObj.Web3SmartContract();
   url_string=document.URL;
   var url = new URL(url_string);
@@ -668,7 +668,7 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-  Web3jsObj.Web3Facotry(rinkebyUrl);
+  Web3jsObj.Web3Facotry(mainnet);
   smartInstance=Web3jsObj.Web3SmartContract();
   
   const counts=smartInstance.getVotesCount.call();
@@ -897,7 +897,7 @@ if(!err)
 
 app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 {
-    Web3jsObj.Web3Facotry(rinkebyUrl);
+    Web3jsObj.Web3Facotry(mainnet);
   const auth =  FireBaseObj.getFireBaseAuth();
 
 
@@ -1006,7 +1006,7 @@ app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
     const auth =  FireBaseObj.getFireBaseAuth();
     ///// add wallet to admin
     const userName = localStorage.getItem("admin");
-    Web3jsObj.Web3Facotry(rinkebyUrl);
+    Web3jsObj.Web3Facotry(mainnet);
     $scope.addEtherToAdmin = function(_from,_fromPk,_to){
         
         var balance = web3.eth.getBalance(_to);

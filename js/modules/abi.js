@@ -11,6 +11,7 @@ var contractsInfo  = {
 	
 const no_address = "0x0000000000000000000000000000000000000000";
 const rinkebyUrl = "https://rinkeby.infura.io/v3/afbac1a223484d84a7784a133d1f2010";
+const mainnet ="https://mainnet.infura.io/v3/afbac1a223484d84a7784a133d1f2010";
 var judgmentAbi =[
      { "constant": false, "inputs": [ { "name": "_address", "type": "address" }, { "name": "judgmentInformationId", "type": "string" }, { "name": "name", "type": "string" }, { "name": "birthOfDate", "type": "string" }, { "name": "password", "type": "string" } ], "name": "addJudgmentInformation", "outputs": [], "payable": false, "stateMutability": "nonpayable", "type": "function" }, { "constant": true, "inputs": [ { "name": "_address", "type": "address" }, { "name": "password", "type": "string" } ], "name": "checkIdAndPassword", "outputs": [ { "name": "", "type": "bool" } ], "payable": false, "stateMutability": "view", "type": "function" }
      ]
