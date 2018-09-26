@@ -4,7 +4,26 @@ var app = angular.module('starter.controllers',[]);
 app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window){
 
 
+$scope.logout=function(){
 
+
+
+    localStorage.removeItem("candidate_nationalId" );
+    localStorage.removeItem("pkAddress" );
+    localStorage.removeItem("address" );
+    let role = localStorage.getItem("role");
+    localStorage.removeItem("role");
+    if(role == "admin")
+    {
+    auth.signOut().then(function() {
+      window.location.href="/admin.html";
+    });
+    }
+    else{
+    window.location.href="/";
+    }
+
+}
    $scope.current_role =  getRole.getCurrentRole();
 
    
@@ -17,7 +36,7 @@ const admin_privateKey = localStorage.getItem("adminPkAddress");
 
 
 Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-Web3jsObj.Web3Facotry(mainnet);
+Web3jsObj.Web3Facotry(rinkebyUrl);
 const smartContract = Web3jsObj.Web3SmartContract();
 
 $scope.nationlIdValidation = function(_id)
@@ -160,8 +179,6 @@ console.log(err);
 
 
 
-
-
     
 
 
@@ -203,7 +220,7 @@ if(localStorage.getItem("role") !=undefined){
   return;
 }
     ///
-    Web3jsObj.Web3Facotry(mainnet);
+    Web3jsObj.Web3Facotry(rinkebyUrl);
 
     web3.eth.filter("pending").watch(
         function(error,result){
@@ -404,10 +421,26 @@ if(result){
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window)
 
  { 
+     $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+        localStorage.removeItem("pkAddress" );
+        localStorage.removeItem("address" );
+        let role = localStorage.getItem("role");
+        localStorage.removeItem("role");
+        if(role == "admin")
+        {
+        auth.signOut().then(function() {
+          window.location.href="/admin.html";
+        });
+        }
+        else{
+        window.location.href="/";
+        }
+     }
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
     Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-    Web3jsObj.Web3Facotry(mainnet);
+    Web3jsObj.Web3Facotry(rinkebyUrl);
     
     var smartInstance = Web3jsObj.Web3SmartContract();
 
@@ -542,7 +575,22 @@ $scope.showProfile=function(_nationalId){
 });
 
 app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,Helper){
-    
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined)
    $window.location.href="/";
@@ -550,7 +598,7 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
     const admin_privateKey = localStorage.getItem("pkAddress");
   
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-  Web3jsObj.Web3Facotry(mainnet);
+  Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
   url_string=document.URL;
   var url = new URL(url_string);
@@ -664,20 +712,37 @@ $scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the curren
 
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
-    
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
+
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
-  Web3jsObj.Web3Facotry(mainnet);
+  Web3jsObj.Web3Facotry(rinkebyUrl);
   smartInstance=Web3jsObj.Web3SmartContract();
   
   const counts=smartInstance.getVotesCount.call();
   const startdate=smartInstance.getStartDate.call();
-  const period=smartInstance.getPeriod.call();
+ const period=smartInstance.getPeriod.call();
   const Threshold = smartInstance.getPercentageOfVoters.call();
+  
   const isChecked = smartInstance.getThresholdFlag.call();
-  $scope.isOptional = isChecked;
-  //   const Endtime=smartInstance.getEndTime.call();
+ $scope.isOptional = isChecked;
+    const Endtime=smartInstance.getEndTime.call();
 
   $scope.IsThresholdEnabled = function($event){
       $scope.isOptional = $event.target.checked;
@@ -896,11 +961,36 @@ if(!err)
 });  
 
 app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
+{$scope.logout=function(){
+    localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
 {
-    Web3jsObj.Web3Facotry(mainnet);
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+}
+    Web3jsObj.Web3Facotry(rinkebyUrl);
   const auth =  FireBaseObj.getFireBaseAuth();
 
+  firebase.auth().onAuthStateChanged(function(user) {
+    
 
+    console.log(user);
+    if(user){
+        localStorage.setItem("admin",user.email);
+      
+        $window.location.href="/AddJudgment.html";
+
+    }
+  });
   auth.signOut().then(function() {
 
   });
@@ -911,7 +1001,12 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
   
 
   });
+ 
+ 
 }
+
+
+
 
 $scope.addEtherToAdmin = function(_from,_fromPk,_to,_adminUser){
         
@@ -940,7 +1035,7 @@ $scope.addEtherToAdmin = function(_from,_fromPk,_to,_adminUser){
         
         if(!err){
             localStorage.setItem("admin",_adminUser);
-      
+            localStorage.setItem("role","admin");
             $window.location.href="/AddJudgment.html";
             
         }
@@ -961,6 +1056,8 @@ else{
 
   $scope.loginAsAdmin=function(_loginForm,_user){
    
+
+
  
     auth.signInWithEmailAndPassword(_user.adminEmail,_user.adminPassword).then(function(_result){
 
@@ -990,8 +1087,9 @@ else{
     }).catch(function(_result){
 
         console.log(_result);
+        window.alert("Email dose not exist");
     });
-
+    
 }
 
 
@@ -1003,10 +1101,26 @@ else{
 app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 
 {
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
     const auth =  FireBaseObj.getFireBaseAuth();
     ///// add wallet to admin
     const userName = localStorage.getItem("admin");
-    Web3jsObj.Web3Facotry(mainnet);
+    Web3jsObj.Web3Facotry(rinkebyUrl);
     $scope.addEtherToAdmin = function(_from,_fromPk,_to){
         
         var balance = web3.eth.getBalance(_to);
