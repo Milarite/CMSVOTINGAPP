@@ -13,9 +13,51 @@ app.service("Helper",function(){
 
     this.ConvertTimeStampToDate = function (_timeStamp){
         let d =  new Date(_timeStamp * 1000);
-        return moment(d).format("DD/MM/YYYY");
+        return moment(d).format("MM/DD/YYYY hh:MM:ss");
     }
+ this.ConvertTimeStampToTime = function (_date){
+     let d = new Date(_date);
+        return moment(d).format("hh:MM");
+    }
+    
+    this.SplitTime = function (Period){
+        const SplitDash =Period.split("-");
+const Split1=SplitDash[1].split(":");
+let TimeINt =parseInt(Split1[0]);
+return TimeINt;
+    }
+    this.SplitTimeV2 = function(Period){
+     
+    const Split1=Period.split(":");
+    let TimeINt =parseInt(Split1[0]);
+    return TimeINt;
+        
+    }
+     this.TimeFormat = function (date){
+        var hours = date.getHours();
+        var minutes = date.getMinutes();
+        var ampm = hours >= 12 ? 'pm' : 'am';
+        hours = hours % 12;
+        hours = hours ? hours : 12; // the hour '0' should be '12'
+        minutes = minutes < 10 ? '0'+minutes : minutes;
+        var strTime = hours + ':' + minutes + ' ' + ampm;
+        return strTime;
+     }
+    this.ConvertTimeStampTodDateFormat = function (_date){
 
+        const _DateSplited = _date.split("/");
+        const date = _DateSplited[1] +"/"+ _DateSplited[0]+"/"+_DateSplited[2];
+        let d = new Date(date);
+        
+           return moment(d).format("MM/DD/YYYY");
+       }
+       this.ConvertTimeStampTodDateFormatV2 = function (_date){
+
+       
+        let d = new Date(_date);
+        
+           return moment(d).format("MM/DD/YYYY");
+       }
     this.formatDate = function (date){
         var d = new Date(date);
         

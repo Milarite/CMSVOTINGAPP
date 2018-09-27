@@ -611,9 +611,46 @@ window.location.href="/";
    _idNumber = localStorage.getItem("candidate_nationalId");
 
   }
-$scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
-:false;
-  
+
+const TodayDate=smartInstance.getCurrentTime.call();
+const Period=smartInstance.getPeriod.call();
+const StartDate=smartInstance.getStartDate.call();
+const timeStampToDate=Helper.ConvertTimeStampToDate(TodayDate) ;
+var time2 =new Date(timeStampToDate);
+ time2.add ({hours: 2 }) ;
+
+
+
+let timeStampToTime=Helper.ConvertTimeStampToTime(time2);
+
+const DateFormat = Helper.ConvertTimeStampTodDateFormatV2(timeStampToDate);
+
+const StartDateFormat = Helper.ConvertTimeStampTodDateFormat(StartDate);
+
+const DateNow = new Date(DateFormat);
+const DateStartDate = new Date(StartDateFormat);
+let TimeINt = Helper.SplitTime(Period);
+TimeINt=TimeINt>12 ? TimeINt - 12 : TimeINt ;
+
+ let splitedTime = Helper.SplitTimeV2(timeStampToTime);
+
+
+
+$scope.CheckDate=function(){
+    debugger;
+    if (DateStartDate < DateNow  
+        || (DateStartDate == DateNow && (TimeINt<splitedTime) ))
+     {
+       
+        $scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
+        :false;
+          
+     }   
+
+}
+
+$scope.CheckDate();
+
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
   const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
   const city = smartInstance.getCandidateCity.call(_idNumber);
