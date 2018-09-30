@@ -4,7 +4,26 @@ var app = angular.module('starter.controllers',[]);
 app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window){
 
 
+$scope.logout=function(){
 
+
+
+    localStorage.removeItem("candidate_nationalId" );
+    localStorage.removeItem("pkAddress" );
+    localStorage.removeItem("address" );
+    let role = localStorage.getItem("role");
+    localStorage.removeItem("role");
+    if(role == "admin")
+    {
+    auth.signOut().then(function() {
+      window.location.href="/admin.html";
+    });
+    }
+    else{
+    window.location.href="/";
+    }
+
+}
    $scope.current_role =  getRole.getCurrentRole();
 
    
@@ -160,8 +179,6 @@ console.log(err);
 
 
 
-
-
     
 
 
@@ -204,7 +221,6 @@ if(localStorage.getItem("role") !=undefined){
 }
     ///
     Web3jsObj.Web3Facotry(rinkebyUrl);
-  
     web3.eth.filter("pending").watch(
         
         function(error,result){
@@ -405,6 +421,22 @@ if(result){
     app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window)
 
  { 
+     $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+        localStorage.removeItem("pkAddress" );
+        localStorage.removeItem("address" );
+        let role = localStorage.getItem("role");
+        localStorage.removeItem("role");
+        if(role == "admin")
+        {
+        auth.signOut().then(function() {
+          window.location.href="/admin.html";
+        });
+        }
+        else{
+        window.location.href="/";
+        }
+     }
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
     Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
@@ -543,7 +575,22 @@ $scope.showProfile=function(_nationalId){
 });
 
 app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,Helper){
-    
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
    $scope.current_role =  getRole.getCurrentRole();
    if(localStorage.getItem("role") == undefined)
    $window.location.href="/";
@@ -564,9 +611,46 @@ app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,
    _idNumber = localStorage.getItem("candidate_nationalId");
 
   }
-$scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
-:false;
-  
+
+const TodayDate=smartInstance.getCurrentTime.call();
+const Period=smartInstance.getPeriod.call();
+const StartDate=smartInstance.getStartDate.call();
+const timeStampToDate=Helper.ConvertTimeStampToDate(TodayDate) ;
+var time2 =new Date(timeStampToDate);
+ time2.add ({hours: 2 }) ;
+
+
+
+let timeStampToTime=Helper.ConvertTimeStampToTime(time2);
+
+const DateFormat = Helper.ConvertTimeStampTodDateFormatV2(timeStampToDate);
+
+const StartDateFormat = Helper.ConvertTimeStampTodDateFormat(StartDate);
+
+const DateNow = new Date(DateFormat);
+const DateStartDate = new Date(StartDateFormat);
+let TimeINt = Helper.SplitTime(Period);
+TimeINt=TimeINt>12 ? TimeINt - 12 : TimeINt ;
+
+ let splitedTime = Helper.SplitTimeV2(timeStampToTime);
+
+
+
+$scope.CheckDate=function(){
+    debugger;
+    if (DateStartDate < DateNow  
+        || (DateStartDate == DateNow && (TimeINt<splitedTime) ))
+     {
+       
+        $scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
+        :false;
+          
+     }   
+
+}
+
+$scope.CheckDate();
+
   // this line will call function thats accept address and password as parameter and return true or false based on founded 
   const birthOfDate = smartInstance.getCandidatebirthOfDate.call(_idNumber);
   const city = smartInstance.getCandidateCity.call(_idNumber);
@@ -665,7 +749,23 @@ $scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the curren
 
 });
 app.controller("settingsCtrl",function($scope,Web3jsObj){
-    
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
+
     const admin_address = localStorage.getItem("adminAddress");
     const admin_privateKey = localStorage.getItem("adminPkAddress");
   Web3jsObj.web3Init(contractsInfo.main,MainAbi,admin_address,admin_privateKey);
@@ -674,11 +774,12 @@ app.controller("settingsCtrl",function($scope,Web3jsObj){
   
   const counts=smartInstance.getVotesCount.call();
   const startdate=smartInstance.getStartDate.call();
-  const period=smartInstance.getPeriod.call();
+ const period=smartInstance.getPeriod.call();
   const Threshold = smartInstance.getPercentageOfVoters.call();
+  
   const isChecked = smartInstance.getThresholdFlag.call();
-  $scope.isOptional = isChecked;
-  //   const Endtime=smartInstance.getEndTime.call();
+ $scope.isOptional = isChecked;
+    const Endtime=smartInstance.getEndTime.call();
 
   $scope.IsThresholdEnabled = function($event){
       $scope.isOptional = $event.target.checked;
@@ -897,11 +998,36 @@ if(!err)
 });  
 
 app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
+{$scope.logout=function(){
+    localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
 {
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+}
     Web3jsObj.Web3Facotry(rinkebyUrl);
   const auth =  FireBaseObj.getFireBaseAuth();
 
+  firebase.auth().onAuthStateChanged(function(user) {
+    
 
+    console.log(user);
+    if(user){
+        localStorage.setItem("admin",user.email);
+      
+        $window.location.href="/AddJudgment.html";
+
+    }
+  });
   auth.signOut().then(function() {
 
   });
@@ -912,7 +1038,12 @@ if(localStorage.getItem("admin") == undefined || localStorage.getItem("adminPass
   
 
   });
+ 
+ 
 }
+
+
+
 
 $scope.addEtherToAdmin = function(_from,_fromPk,_to,_adminUser){
         
@@ -941,7 +1072,7 @@ $scope.addEtherToAdmin = function(_from,_fromPk,_to,_adminUser){
         
         if(!err){
             localStorage.setItem("admin",_adminUser);
-      
+            localStorage.setItem("role","admin");
             $window.location.href="/AddJudgment.html";
             
         }
@@ -962,9 +1093,8 @@ else{
 
   $scope.loginAsAdmin=function(_loginForm,_user){
    
-    auth.signOut().then(function() {
 
-                                   });
+
  
     auth.signInWithEmailAndPassword(_user.adminEmail,_user.adminPassword).then(function(_result){
 
@@ -994,8 +1124,9 @@ else{
     }).catch(function(_result){
 
         console.log(_result);
+        window.alert("Email dose not exist");
     });
-
+    
 }
 
 
@@ -1007,6 +1138,22 @@ else{
 app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 
 {
+    $scope.logout=function(){
+        localStorage.removeItem("candidate_nationalId" );
+localStorage.removeItem("pkAddress" );
+localStorage.removeItem("address" );
+let role = localStorage.getItem("role");
+localStorage.removeItem("role");
+if(role == "admin")
+{
+auth.signOut().then(function() {
+  window.location.href="/admin.html";
+});
+}
+else{
+window.location.href="/";
+}
+    }
     const auth =  FireBaseObj.getFireBaseAuth();
     ///// add wallet to admin
     const userName = localStorage.getItem("admin");

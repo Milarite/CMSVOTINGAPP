@@ -31,6 +31,7 @@
                                               <script src="./js/material-dashboard.min.js?v=2.1.0" type="text/javascript"></script>
                                               <script src="js/modules/md-time-picker.js"></script>
                                               <script src="js/modules/angular-time-picker.min.js"></script>
+                                              <script src="js/modules/date.js"></script>
                                               <script>
                                                     $(document).ready(function() {
                                                       // Javascript method's body can be found in assets/js/demos.js
@@ -179,16 +180,6 @@
                                         </div>
                                      </body>
 <script>
-                                              function logout(){
-localStorage.removeItem("candidate_nationalId" );
-localStorage.removeItem("pkAddress" );
-localStorage.removeItem("address" );
-let role = localStorage.getItem("role");
-localStorage.removeItem("role");
-if(role == "admin")
-window.location.href="/admin.html";
-else
-window.location.href="/";
-}
+                                              
  </script>
                                         </html>
