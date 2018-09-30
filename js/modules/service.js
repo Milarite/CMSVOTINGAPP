@@ -21,7 +21,7 @@ app.service("Helper",function(){
     }
     
     this.SplitTime = function (Period){
-        const SplitDash =Period.split("-");
+ const SplitDash =Period.split("-");
 const Split1=SplitDash[1].split(":");
 let TimeINt =parseInt(Split1[0]);
 return TimeINt;
