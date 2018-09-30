@@ -1,6 +1,6 @@
 
-const private_key = "50FBEE34A355F70931B95C5C114AED5FB21BAF14971C1CDCC067BA46024C7275";
-const public_key = "0x63a9adabb3edc39f552249cc0dc23eeab0df3c72";
+const private_key = "9a11dae64f2c9bcf97b15b25ec00f120124b1485827cecc2015167e4335a48c3";
+const public_key = "0x7c854fb0092352fdb6913c897fe89d37f96bdb44";
 var contractsInfo  = {
     main : "0x8cb777633e94138e6be575707746c4a248a8719e",
     judgment :"0x5c370326026c333850fa1929c2f6a296e6ea0e5a",
