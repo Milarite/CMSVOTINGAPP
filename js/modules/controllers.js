@@ -1,12 +1,13 @@
 var app = angular.module('starter.controllers',[]);
 
 
-app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window){
-
+app.controller('addCandidateCtrl',function($scope,Web3jsObj,getRole,$window,FireBaseObj){
+    const auth =  FireBaseObj.getFireBaseAuth();
 
 $scope.logout=function(){
 
 
+    
 
     localStorage.removeItem("candidate_nationalId" );
     localStorage.removeItem("pkAddress" );
@@ -418,9 +419,10 @@ if(result){
 
     });
 
-    app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window)
+    app.controller("ViewCandidateCtrl",function($scope,Web3jsObj,getRole,$window,FireBaseObj)
 
  { 
+    const auth =  FireBaseObj.getFireBaseAuth();
      $scope.logout=function(){
         localStorage.removeItem("candidate_nationalId" );
         localStorage.removeItem("pkAddress" );
@@ -574,7 +576,8 @@ $scope.showProfile=function(_nationalId){
 
 });
 
-app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,Helper){
+app.controller("CandidateProfileCtrl",function($scope,Web3jsObj,getRole,$window,Helper,FireBaseObj){
+    const auth =  FireBaseObj.getFireBaseAuth();
     $scope.logout=function(){
         localStorage.removeItem("candidate_nationalId" );
 localStorage.removeItem("pkAddress" );
@@ -616,12 +619,15 @@ const TodayDate=smartInstance.getCurrentTime.call();
 const Period=smartInstance.getPeriod.call();
 const StartDate=smartInstance.getStartDate.call();
 const timeStampToDate=Helper.ConvertTimeStampToDate(TodayDate) ;
+
 var time2 =new Date(timeStampToDate);
- time2.add ({hours: 2 }) ;
+ //time2.add ({hours: 2 }) ;
 
 
 
-let timeStampToTime=Helper.ConvertTimeStampToTime(time2);
+let timeStampToTime=Helper.TimeFormat(time2);
+
+
 
 const DateFormat = Helper.ConvertTimeStampTodDateFormatV2(timeStampToDate);
 
@@ -630,15 +636,15 @@ const StartDateFormat = Helper.ConvertTimeStampTodDateFormat(StartDate);
 const DateNow = new Date(DateFormat);
 const DateStartDate = new Date(StartDateFormat);
 let TimeINt = Helper.SplitTime(Period);
-TimeINt=TimeINt>12 ? TimeINt - 12 : TimeINt ;
+
 
  let splitedTime = Helper.SplitTimeV2(timeStampToTime);
 
 
-
 $scope.CheckDate=function(){
+   
     if (DateStartDate < DateNow  
-        || (DateStartDate == DateNow && (TimeINt<splitedTime) ))
+        || (Helper.ConvertTimeStampTodDateFormatV2(DateStartDate) == Helper.ConvertTimeStampTodDateFormatV2(DateNow) && (TimeINt<splitedTime) ))
      {
        
         $scope.isWinner=_idNumber == NationalIdOFTheWinner ? true // check if the current nationalId == the winner Id
@@ -747,7 +753,8 @@ $scope.CheckDate();
 
 
 });
-app.controller("settingsCtrl",function($scope,Web3jsObj){
+app.controller("settingsCtrl",function($scope,Web3jsObj,FireBaseObj){
+    const auth =  FireBaseObj.getFireBaseAuth();
     $scope.logout=function(){
         localStorage.removeItem("candidate_nationalId" );
 localStorage.removeItem("pkAddress" );
@@ -880,7 +887,7 @@ $scope.updateSettingsValue(data.NumOfVotes,"votesCount");
           break;
 
           case "Threshold":
-          debugger;
+          
 if(!$scope.isOptional)
 {
           data =  smartInstance.setPercentageOfVoters.getData(_newValue.toString());
@@ -997,7 +1004,9 @@ if(!err)
 });  
 
 app.controller("adminLoginCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
-{$scope.logout=function(){
+{
+    const auth =  FireBaseObj.getFireBaseAuth();
+    $scope.logout=function(){
     localStorage.removeItem("candidate_nationalId" );
 localStorage.removeItem("pkAddress" );
 localStorage.removeItem("address" );
@@ -1014,7 +1023,7 @@ window.location.href="/";
 }
 }
     Web3jsObj.Web3Facotry(rinkebyUrl);
-  const auth =  FireBaseObj.getFireBaseAuth();
+  
 
   firebase.auth().onAuthStateChanged(function(user) {
     
@@ -1137,6 +1146,8 @@ else{
 app.controller("addJudgmentCtrl",function($scope,FireBaseObj,$window,Web3jsObj)
 
 {
+    const auth =  FireBaseObj.getFireBaseAuth();
+
     $scope.logout=function(){
         localStorage.removeItem("candidate_nationalId" );
 localStorage.removeItem("pkAddress" );
@@ -1153,7 +1164,6 @@ else{
 window.location.href="/";
 }
     }
-    const auth =  FireBaseObj.getFireBaseAuth();
     ///// add wallet to admin
     const userName = localStorage.getItem("admin");
     Web3jsObj.Web3Facotry(rinkebyUrl);
