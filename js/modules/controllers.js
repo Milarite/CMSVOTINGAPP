@@ -637,7 +637,6 @@ TimeINt=TimeINt>12 ? TimeINt - 12 : TimeINt ;
 
 
 $scope.CheckDate=function(){
-    debugger;
     if (DateStartDate < DateNow  
         || (DateStartDate == DateNow && (TimeINt<splitedTime) ))
      {
